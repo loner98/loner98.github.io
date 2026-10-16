@@ -1,0 +1,1213 @@
+<!DOCTYPE html><html lang="zh_CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Mjlab | 一个无趣的博客</title><meta name="keywords" content="mjlab"><meta name="author" content="Loner"><meta name="copyright" content="Loner"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Mjlab"><meta name="application-name" content="Mjlab"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Mjlab"><meta property="og:url" content="http://example.com/2026/06/25/Mjlab/index.html"><meta property="og:site_name" content="一个无趣的博客"><meta property="og:description" content="概念 架构概述  Entity被组合成一个MjSpec文件，编译后传输到Mujoco Warp进行GPU仿真。ManagerBasedRlEnv负责协调MDP；RSL-RL负责训练  8种manager  ObservationManager ActionManager RewardManager"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/img/default_cover.jpg"><meta property="article:author" content="Loner"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/default_cover.jpg"><meta name="description" content="概念 架构概述  Entity被组合成一个MjSpec文件，编译后传输到Mujoco Warp进行GPU仿真。ManagerBasedRlEnv负责协调MDP；RSL-RL负责训练  8种manager  ObservationManager ActionManager RewardManager"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2026/06/25/Mjlab/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: false,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Loner","link":"链接: ","source":"来源: 一个无趣的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '一个无趣的博客',
+  title: 'Mjlab',
+  postAI: '',
+  pageFillDescription: '概念, 架构概述, Entity, Actutors, Actuators types, XML执行器, 执行器延迟, 编写执行器配置, Sensors, BuiltinSensor, ContactSnesot, Primary和Secondary, RGB-D Sensor, Scene, Terrain(地形), The Manager Layer, Observations, Observation groups, Progressing pipeline, 自定义observation函数, Action, Task-space actions, Multiple action terms, Rewards, 内置奖励函数, 按dt进行奖励缩放, terminations（终止）, 内置termination函数, Commands, Include command terms, 自定义command term, Events, Lifecycle modes, Built-in event functions, 自定义 event term, 域随即化, Curriculum, Reward Curriculum, Termination curriculum, Metrics, Recorders, Writing a recorder tern, Training amp Debugging, Task registry, Configuration, 检查点, Viewer, Native Mujoco Viewer, Viser, API概念架构概述被组合成一个文件编译后传输到进行仿真负责协调负责训练种评估停止条件区分终端重置和超时在生命周期节点启动重置间隔触发事件项域随机化通过事件项实现生成并重采样目标信号速度目标姿态目标根据策略表现调整训练条件将自定义的每步值记录为平均值环境生命周期分类是否固定关节类型具有内部关节除了可能存在的自由关节外没有其他关节每个实体都由一个描述只有是必须的其它所有字段都有合理的默认值一个返回的可调用对象简单情况复杂操作在返回之前可以进行任何操作添加实体更改关节限位更换材质或者完全不使用文件以编程的方式构建整个模型默认的姿态速度和关节位置速度和是字典用于将正则表达式模式映射到值模式会按照顺序与关节名称进行匹配设置以使用模型中的关键帧而不是在此处定义值执行器配置仅当具有可驱动关节时才需要此字段需要在不同的并行世界中使用不同的网格资源的场景使用而不是提供了方法这些方法接受正则表达式并返回匹配的元素索引和名称读取运行时状态是奖励观察和终止函数的主要接口它公开运动学状态姿态速度加速度执行器力广义力以及导出的体坐标系量例如投影重力所有这些都以形状为的张量形式呈现传感器传感器在中配置不是在单个上配置传感器可以引用实体元素例如机器人脚上的接触传感器连接到身体某个部位的加速度传感器也可以独立于任何实体在运行时传感器通过按名称访问原始仿真数据对于或传感器未涵盖的任何内容可通过和访问低层数组这些文件以张量的形式暴露和的所有字段将高级指令位置速度力度转换为驱动关节的底层力通过的字段配置提供内置执行器和显式执行器所有都共享从继承的公共字段与关节名称匹配的正则表达式模式元组折算到目标关节处的转子转动惯量静摩擦在目标关节处被建模为一个约束条件创建用于控制的执行器速度控制器直接扭矩控制的控制器原生控制同时跟踪位置指令和速度指令实现方式为成对的执行器总和为封装了的原生直流电机元件创建具有力长度速度特性的仿生肌肉动力学执行器实现理想的控制器扭矩计算公式为扩展通过速度依赖的扭矩饱和来模拟直流电机的扭矩速度曲线反电动势效应实现线性扭矩速度曲线零速度时最大扭矩最大速度时零扭矩一种基于神经网络的执行器它使用训练好的多层感知器根据关节状态历史预测扭矩输出当分析模型无法捕捉复杂的执行器动力学特性例如延迟非线性和摩擦效应时该执行器非常有用它继承了直流电机基于速度的扭矩限制执行器执行器封装了机器人文件中以定义的执行器配置程序通过将执行器的关节名称与模式进行匹配来查找现有执行器每个关节恰好对应一个执行器执行器延迟任何执行器配置都支持内联延迟字段用于模拟命令延迟在实际机器人中板载回路以的频率运行并可直接访问编码器但由于推理时间和通信总线周期策略中的位置目标到达时间会延迟执行器延迟可以模拟这种情况命令目标虽然延迟但控制律仍然能够获取最新的关节状态与观测延迟共同构成往返过程的两个环节传感器到策略再到电机编写执行器配置由于在每个配置中执行器参数是统一的因此需要不同参数的关节应使用单独的执行器配置传感器位于实体数据和数据访问层次结构中的原始模拟数组之间传感器在场景级别配置而不是在单个实体级别配置的传感器可以引用实体元素但也可以是完全独立于任何实体的提供四种传感器类型用于原生测量的用于结构化接触检测的用于加速的光线投射的用于渲染的封装了的原生传感器每个传感器都通过连接到元素等并返回一个形状为的张量类别可用传感器用于标识传感器连接到哪个元素上字段将查找范围限定在特定实体的命名空间内传感器名称会自动添加相应的前缀例如实体上的变为实体中已定义的传感器会在场景合成过程中自动被发现并加上实体名称前缀无需为这些传感器创建在每个物理计算步骤中都会生成一个扁平的非结构化的接触对列表涵盖整个场景一个脚的几何体可能会同时与地面产生多个接触并与其他实体的接触交错出现将这个原始列表过滤成关注的接触对将每个元素的多次接触减少到一个固定数值并将结果打包成整洁的批量张量和接触关系是成对的通常你想要知道的是机器人的脚是否接触到了地形而不仅仅是某物是否接触了某物定义了你要测量的元素即脚可选地限定了它们接触的对象即地形当为时与元素的任何接触都计入其中每侧都通过一个进行指定该模式用于选择元素类型或而模式接受正则表达式或正则表达式元组用于与实体内的元素名称进行匹配对现有相机进行封装模型以定义相机通过传递其名称传感器将使用模型中相机的位置方向和视场角创建一个新相机当为默认值时传感器会在场景构建期间向添加一个新摄像机指定以及可选的来放置相机支持两种定义相机投影的方式基于视场角基于相机内参为了匹配真实的相机硬件相机可以通过或和或来参数化这些字段在中设置并提供对内参矩阵的直接控制当存在内参时会忽略设置可以将新摄像机附加到特定物体上而不是世界物体上这样相机的和坐标相对于的坐标相机会随物体一起运动数据类型彩色图像深度图像输入分割通道存储对象通道存储对象类型背景像素为渲染设置场景中的所有摄像机传感器必须将和设置为相同的值这是底层渲染系统的限制该系统为所有摄像机使用同一个如果设置不一致在构建场景时会引发异常输出是一个数据类每种数据类型有一个字段场景将实体地形和传感器合并到一个单一的仿真中描述了世界的内容而类负责的组合编译以及运行时状态管理场景从一个根开始并将每个实体的规格以唯一的名称前缀附加到其中一个名为的机器人实体其所有内部的元素刚体关节几何体执行器传感器都带有前缀因此变为变为依此类推使用前缀可以防止当多个实体共享元素名称时出现名称冲突并为观察值和奖励项提供一致的命名空间地形如有以无前缀的方式附加其元素位于全局命名空间中传感器在实体之后添加并可通过带前缀的名称引用实体元素将组合后的转换为单个将编译后的模型导出为文件以便在独立的查看器中进行离线查看每个实体的初始状态关键帧都会合并到导出文件中因此模型会以其默认姿态打开地形支持两种模式一种是平坦地面适用于不需要变化地形的任务另一种是程序化地形生成器它可以生成难度可配置的地下地形网格平坦地形默认模式单个地面建模为平面几何体不包含任何程序生成的几何体环境以规则网格排列间距由中的控制程序化地形对于受地形多样性影响的任务如运动导航会组装一个矩形的子地形网格每个地块都由一个生成该配置定义了几何形状及其随难度的缩放方式地形类型在网格中的分布方式每种地形类型对应一列生成器会使用列无论的值是多少同一列中的所有地块都属于同一种地形类型难度从第行最简单逐渐增加到第行最难字段控制的是机器人在生成时在各列中的分布情况而非列的数量正是这种结构化的布局使得课程系统能够随着机器人表现的提升将环境逐步推进到难度更高的行每个区域都会独立采样一种按比例加权的地形类型并从中选取一个难度值系统会遵循的设置这种方式能提供最大的多样性但没有结构化的难度递进每个子地形的生成函数都会接收一个值该值会线性插值地形的可配置范围例如函数在难度时产生平坦的地面在难度时产生厘米的台阶单个数据类即可完整定义环境物理世界智能体与物理世界的交互接口以及定义在上面的所有内容都位于一个扁平对象中因此无需遍历层次结构即可检查复制和修改环境所有字段标有的为必填字段其他所有字段均有默认值每个策略步长对应的物理步数越大越快但可能导致不稳定环境步长物理仿真配置物理参数时间步长积分器求解器接触设置默认时间步长为积分器为求解器为接触设置为默认值可通过覆盖地形实体和传感器同时设置和由决定必须的无默认值每个的最大时长单位为秒超过该时长后将被终止默认值为秒是否为有限时域任务若为则在后终止若为则在后继续运行但不再计算奖励和指标默认值为默认为是否按时间步长缩放奖励当默认值时每步奖励会被乘以时间步长以便在不同时间步长下保持奖励的可比性无论仿真频率多少仿真秒内总累计奖励总和大致相同当时奖励不会被缩放奖励的绝对值可能会随时间步长的变化而变化观测组每个键都是一个组名例如各观测组在噪声历史数据延迟和数据拼接方面可能存在差异动作项每个项控制策略输出的一个部分并将其路由到特定实体的执行器奖励项管理器在每个步骤中计算一个加权和终止条件如果为空则事件绝不会提前终止添加一个项以强制确定回合长度限制事件项用于场景随机化和状态重置默认设置包含该设置会在每个回合将所有实体重置为初始姿态覆盖此字典以替换或拓展默认的重置行为命令生成器例如用于运动的速度目标命令会在可配置的时间间隔内以及重置时进行重采样根据表现调整训练条件自定义指标与项一同作为平均值进行记录用于可重复性的随机种子如果为则会选择一个随机种子并在初始化后将其存储回此字段中渲染所需的摄像机位置分辨率和跟踪目标所有字典都遵循相同的模式每个条目都将一个字符串名称映射到一个术语配置对象该配置始终至少包含一个字段指向该术语的可调用对象以及一个字典包含转发给可调用对象的额外关键字参数管理器在每个步骤中调用当是一个以实例化的类时会调用类的方法名称是任意的他门出现在训练日志中仅用于标识观测定义了在每个步骤中感知到的信息将各个观测项组装成接收的输入张量观测项都会经过一个可配置的处理流程噪声注入裁剪缩放传感器延迟和历史堆叠每个组都是一个其中包含一个字典该字典将字符串名称映射到条目按照注册顺序在最后一个维度上连接输出该字典会传递给在初始化时解析函数并在此时非配任何所需的历史或延迟缓冲区控制整个组的噪声应用为时各的噪声配置将被忽略使得在带噪声的和无噪声的组之间共享定义变得简单每个步骤每个组的每个都按以下顺序经过以下流程被调用必须返回一个张量如果组的且该项具有配置则应用噪声如果对设置了则值将被限制在该范围内如果设置了则输出将逐元素相乘接受标量元组或张量作为参数如果则该项的输出存储在一个环形缓冲区返回先前步骤中的值如果则过去的输出会被堆叠起来观测数据支持两个时间特征历史数据和延迟数据历史数据将过去的帧堆叠起来为策略提供时间上下文延迟数据则通过返回更早时间步的观测数据来模拟传感器延迟将设置为会堆叠该项的个最新输出当默认值时历史维度会被折叠到特征维度中从而生成一个适用于多层感知机的张量当时输出将保留时间维度形式为适用于循环神经网络环境重置时历史缓冲区将被清空充值后的第一次观察会填充到所有历史槽中因此策略从零步开始就能接收到有效数据将会启用一个环形缓冲区该缓冲区存储过去的输出并返回上一步的输出延迟值以整数步长从中均匀采样延迟为零时返回当前观测值延迟为二时返回两步前的观测值以下函数位于中也重新导出为所有函数都返回张量机器人底座在基座标系中的线速度机器人底座在基座标系中的角速度投影到基准坐标系中的重力向量提供了横滚角和俯仰角信息但未明确表示姿态相对于默认位姿的关节位置相对与默认速度的关节速度最新动作张量可选择性的传入来选择单个动作项来自指定命令项的当前命令张量需要来自指定的原始数据传感器数据切片需要发出的每条光线投射命中点上方的高度需要自定义函数观测函数接受作为其第一个参数并返回一个张量其他额外参数作为函数参数声明并通过提供定义了策略如何控制模拟动作管理器在每个步骤中接收策略的输出张量将其拆分为已经注册的动作项并将每个切片路由到相应的执行器所有类型都共享一组从继承的基本参数标识要控制的场景实体在应用任何偏移量之前乘以原始策略输出它接受一个标量或一个将执行器名称模式映射到每个目标值的字典这可以在映射到物理上有意义的单位时保持策略输出在归一化范围内缩放后会添加偏移关节动作类型还提供它会自动加载实体的默认关节位置或速度作为偏移以便原始输出为零时产生默认姿势可选择的在处理后的动作经过缩放和偏移后到达执行器之前进行限制设置关节位置目标当默认值时策略输出为零即表示采用默认姿态系统会自动减去设定的编码器偏置以确保随机偏移量能正确传递到控制命令中设置相对于当前关节位置的目标关节位置设置关节速度目标值直接设置关节力扭矩无默认偏移量设定肌腱长度设定肌腱力度指定位置施加力和扭矩通过带阻尼的最小二乘逆运动学将笛卡尔坐标系下的位置和姿态指令转换为关节坐标系下的位置目标每个降采样子步都会执行一次逆运动学运算因此末端执行器能够在各个子步之间持续跟踪目标而不仅仅是在策略频率下进行跟踪仅位置一个环境可以注册任意数量的动作管理器按照注册顺序连接这些的维度在相应的边界处分割策略的输出张量并独立地路由每个切片每个奖励项都是一个函数每一步都返回一个针对特定环境的标量值奖励管理器计算所有奖励项的加权和并将其返回给训练框架每个项通过名称注册到一个该配置包含可调用项和权重负权重会产生惩罚内置奖励函数可在中找到并且在任务间共享奖励单个任务有自己的奖励所有奖励函数返回一个形状为的张量对于尚未终止此步骤的环境返回与正权重一起使用作为生存奖励如果环境因非超时原因终止返回使用负权重可以惩罚失败的情况执行器力的平方和惩罚能耗高的动作关节速度平方和当前与前一次之间的平方差之和惩罚策略的快速变化二阶动作查分平方和用于惩罚动作信号中的高频抖动关节位置超出时会受到惩罚都在限制范围内时惩罚为指数核函数用于测量与默认关节的偏差执行器消耗的正机械功总和再生功率不计入其中在基坐标系中投影重力向量的和分量的平方和当完全垂直时为零按进行奖励缩放默认值为启用此选项后奖励管理器会在累加奖励之前将每个奖励项乘以环境步骤的持续时间这使得片段式奖励总量与模拟频率无关以运行的任务与以运行的同一任务产生的预期片段奖励相同因为每个步骤对总奖励的贡献比例会相应减少每个的奖励总额以的形式记录并始终除以该的持续时间从而得出一个奖励率该奖励率在不同长度的运行中具有可比性终止终止条件定义了每个的结束时机每个条件都是一个函数该函数在每一步返回每个环境的布尔张量汇总所有条件并将结果作为终止失败或者提前终止报告给训练框架每个通过按名称进行注册设置会将条件标记为截断而非终止失败截断会映射到接口中的信号失败会映射到代理应该估计截断之后的未来值但不应该估计故障之后的未来值内置函数当长度达到时返回使用注册以便管理器将其视为截断当的向上轴与世界向上轴之间的夹角超过弧度时返回当资产的根链接高度低于米时返回当物理状态中的任何位置出现或值时返回这是一种安全机制用于干净地终止发散的模拟指定策略在每个时刻应达到的目标目标速度参考轨迹和目标位置命令管理器生成这些信号以可配置的时间间隔重新采样它们并通过观测系统将它们传递给策略以字典的形式注册在中该字典将字符串名称映射到实例字段控制命令更改的频率每次重采样后该项都会从给定的秒数范围内均匀抽取一个新的计时器值每回合重置时命令也会无条件的进行重采样函数按名称读取当前命令张量并将其传递给策略每个任务都有其自身针对特定目标而制定的命令项生成从可配置范围内均匀采样的平面速度指令支持静止模式部分环境接收零速度和航向模式偏航角速度被一个跟踪采样航向角的比例控制器所取代由速度任务使用为被操作物体生成三维目标位置支持固定和动态难度模式跟踪指标包括位置误差和任务成功率用于操作任务该模块从一个预先录制的运动片段中以流式逐帧方式输出参考关节位置速度和身体姿态支持三种起始帧采样模式固定从第帧开始均匀随机采样和自适应偏向于困难区域在环境重置时机器人会从采样得到的帧进行初始化并可选择性地施加扰动噪声该机制应用于机器人跟踪任务中自定义自定义是一个继承自的类并于一个继承自的数据配置类配对必须实现四个方法用于对新目标采样逐步更新记录日志一个命令属性用于返回当前目标张量该配置必须实现一个方法用于构建配对项实例会在环境生命周期的特定节点执行任何需要在启动时重置时或者训练期间定期运行的逻辑都会被注册为事件项都通过进行配置区别在于控制每个触发时机的字段中的字段决定了何时触发环境初始化期间触发一次所有管理器构建完成后触发所有环境同时接收适用于不同环境间有差异但整个训练过程中保持不变的参数每次重置场景时触发状态初始化和场景级域随即初始化都属于此模式可选的字段用于防止非常短时该项过于频繁触发上次触发后步数不足的环境跳过该项以固定的时间间隔触发频率由控制该参数为一个以秒为单位的范围每次触发后管理器从该范围均匀采样一个新的等待时间默认情况每个环境都有单独的计时器设置可将所有环境同步到单个共享计时器适用与所有环境的每个环境步骤旨在处理需要在每个步中都进行评估的持续效果将所有实体重置为其默认姿态的默认重置单个实体的根姿态和速度并从默认值中以均匀随机偏移接受包含键的和字典方向扰动与默认四元数组合对于固定底座机器人这是将其放置在环境原点的唯一方式如果没有它它们会堆叠在世界原点根据环境分配的地形等级和类型将实体放置在随机选择的平坦地形区域上若无可用平坦区域则回退至此功能适用于机器人需在分配的子地形内平坦地面上生成以执行移动任务的情况通过在实体的默认值上添加均匀随机偏移来重置关节位置和速度并限制在软关节限制范围内给的当前上添加一个随机速度增量模拟外部推动力通过外部力矩机构对一个或多个物体施加随机力和扭矩对物体施加瞬时外力和力矩持续时间和冷却时间可配置每个环境独立地随机采样一个力的方向并保持该方向一段采样的持续时间然后等待冷却时间后再次施加支持可选的用于将作用点从质心偏移包括内置的调试可视化可以在查看器中绘制力箭头与一起使用随机化地形自定义的前两个参数是和其他参数来自会直接修改仿真状态并且不返回任何值复杂时间项使用类域随即化管理器会根据策略表现调整训练条件训练从较简单的问题开始随着策略展现出应对当前条件的能力难度会逐渐增加每次环境重置都会调用每个接收环境和重置环境集检查一些性能指标并将其应用于更改环境参数衡量每个机器人在中行进距离行进距离足够的机器人会在地形网格中提升一个难度等级根据训练步数扩展速度命令的范围每个阶段都会指定一个步数阈值以及超过该阈值时要应用的新范围根据训练步数阈值调整奖励的权重和或参数取代了较旧的函数并且还支持修改奖励函数参数根据训练步数阈值调整终止项的参数可用于随着训练的进行逐步收紧终止条件随着训练的进行会对奖励项的权重或关键字参数进行更改每个阶段指定一个步数阈值和一个可选的权重或参数更新按顺序评估各个阶段并应用已达到阈值的每个阶段常见做法是在训练初期引入较低的惩罚项并在策略掌握基本技能后增加惩罚项还可以更改传递给奖励函数的参数单个阶段可以同时更新权重和参数会在训练过程中逐步调整终止条件的参数指标管理器会将每步的标量值记录为回合平均值指标本身不具有权重也不会根据步长进行缩放每个指标项都会以其名称注册到的指标字典中配置非常简单一个可调用对象和一个可选的参数字典提供生命周期用于在过程中记录数据不会影响优化循环每个都是一个需要自己实现的类会在合适的时机调用在终止的环境被重置之前在内被调用保存上一步结束时的观测值保存最终动作随后会立即将该变量在这些环境中清除记录最终奖励在重置完成且有新的观测数据可用时调用在每次结束时调用并传入新的观测值环境关闭时调用继承类并重写所需的环境变量可通过获取从而可以访问以及所有其他管理器使用进行强化学习分为三个部分任务注册将环境和训练配置捆绑在同一个名称下将环境适配到期望的接口控制训练运行中的每一个任务都是一个二元组一个环境配置和一个训练配置将字符串名称映射到这个二元组以便可以通过按名称启动训练注册需要用于训练的一个禁用随机化并将回合长度设置为无限的变体用于评估包含超参数和网络架构的可选的自定义运行器类默认为包含设置网络架构和超参数检查点会在目录下查找最近的一次运行目录并加载编号最大的检查点可通过对目录名称进行正则表达式匹配和对检查点文件名进行正则表达式匹配来缩小搜索范围基于构建的原生查看器和快捷键暂停或恢复仿真重置环境循环切换环境切换同时渲染所有环境切换奖励图表切换调试可视化模式侧边烂播放暂停重置速度调整环境选择和显示设置实时现实每项的奖励图表可通过复选框切换当使用时实时现实每项的指标图表场景中每个的实时和深度图像面板深度比例滑块可调整可视化范围视锥切换可在场景中显示摄像机的视野显示或隐藏和组',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-16 16:00:15',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 8.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/images/avatar.png"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">一个无趣的博客</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.05rem;">C++<sup>1</sup></a><a href="/tags/Co-Training/" style="font-size: 1.05rem;">Co-Training<sup>1</sup></a><a href="/tags/Diffusion-Policy/" style="font-size: 1.05rem;">Diffusion Policy<sup>1</sup></a><a href="/tags/Mujoco/" style="font-size: 1.05rem;">Mujoco<sup>1</sup></a><a href="/tags/RL/" style="font-size: 1.05rem;">RL<sup>1</sup></a><a href="/tags/docker/" style="font-size: 1.05rem;">docker<sup>1</sup></a><a href="/tags/mjlab/" style="font-size: 1.05rem;">mjlab<sup>1</sup></a><a href="/tags/ros/" style="font-size: 1.05rem;">ros<sup>5</sup></a><a href="/tags/%E4%BB%BB%E5%8A%A1%E8%A7%84%E5%88%92/" style="font-size: 1.05rem;">任务规划<sup>1</sup></a><a href="/tags/%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD/" style="font-size: 1.05rem;">具身智能<sup>1</sup></a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.05rem;">服务器<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/10/"><span class="card-archive-list-date">十月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/07/"><span class="card-archive-list-date">七月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/06/"><span class="card-archive-list-date">六月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">9</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/01/"><span class="card-archive-list-date">一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/12/"><span class="card-archive-list-date">十二月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">学习笔记</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/mjlab/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>mjlab</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Mjlab</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-06-25T12:00:27.000Z" title="发表于 2026-06-25 12:00:27">2026-06-25</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-10-16T16:00:15.736Z" title="更新于 2026-10-16 16:00:15">2026-10-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">11.6k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>44分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为秦皇岛"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>秦皇岛</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/default_cover.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2026/06/25/Mjlab/"><header><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">学习笔记</a><a href="/tags/mjlab/" tabindex="-1" itemprop="url">mjlab</a><h1 id="CrawlerTitle" itemprop="name headline">Mjlab</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Loner</span><time itemprop="dateCreated datePublished" datetime="2026-06-25T12:00:27.000Z" title="发表于 2026-06-25 12:00:27">2026-06-25</time><time itemprop="dateCreated datePublished" datetime="2026-10-16T16:00:15.736Z" title="更新于 2026-10-16 16:00:15">2026-10-16</time></header><h2 id="概念">概念</h2>
+<h3 id="架构概述">架构概述</h3>
+<p><img
+src="https://mujocolab.github.io/mjlab/main/_images/architecture_diagram.png"
+alt="架构" /></p>
+<p>Entity被组合成一个MjSpec文件，编译后传输到Mujoco
+Warp进行GPU仿真。ManagerBasedRlEnv负责协调MDP；RSL-RL负责训练</p>
+<ul>
+<li><p>8种manager</p>
+<ul>
+<li>ObservationManager</li>
+<li>ActionManager</li>
+<li>RewardManager</li>
+<li>TerminationManager:评估停止条件，区分终端重置和超时</li>
+<li>EventManager:在生命周期节点（启动、重置、间隔）触发事件项。域随机化通过事件项实现。</li>
+<li>CommandManger:生成并重采样目标信号（速度目标、姿态目标）</li>
+<li>CurriculumManager:根据策略表现调整训练条件</li>
+<li>MetricsManager:将自定义的每步值记录为episode平均值</li>
+</ul></li>
+<li><p>环境生命周期</p>
+<ul>
+<li>Build</li>
+<li>Initialize</li>
+<li>Reset</li>
+<li>Step</li>
+</ul></li>
+</ul>
+<h3 id="entity">Entity</h3>
+<ul>
+<li>分类：是否固定(base type)，关节类型（articulation
+具有内部关节，除了可能存在的自由关节外没有其他关节）</li>
+<li>每个实体都由一个EntityCfg描述，只有<code>spec_fn</code>是必须的，其它所有字段都有合理的默认值。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.entity <span class="keyword">import</span> EntityCfg</span><br><span class="line">cube_cfg = EntityCfg(spec_fn=get_cube_spec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mjlab.entity <span class="keyword">import</span> EntityCfg, EntityArticulationInfoCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.actuator <span class="keyword">import</span> IdealPDActuatorCfg</span><br><span class="line"></span><br><span class="line">robot_cfg = EntityCfg(</span><br><span class="line">    spec_fn=get_spec,</span><br><span class="line">    init_state=EntityCfg.InitialStateCfg(</span><br><span class="line">        pos=(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.8</span>),</span><br><span class="line">        joint_pos=&#123;<span class="string">&quot;.*_hip_.*&quot;</span>: <span class="number">0.5</span>, <span class="string">&quot;.*&quot;</span>: <span class="number">0.0</span>&#125;,</span><br><span class="line">    ),</span><br><span class="line">    articulation=EntityArticulationInfoCfg(</span><br><span class="line">        actuators=(</span><br><span class="line">            IdealPDActuatorCfg(</span><br><span class="line">                target_names_expr=(<span class="string">&quot;.*&quot;</span>,),</span><br><span class="line">                stiffness=&#123;<span class="string">&quot;.*&quot;</span>: <span class="number">50.0</span>&#125;,</span><br><span class="line">                damping=&#123;<span class="string">&quot;.*&quot;</span>: <span class="number">5.0</span>&#125;,</span><br><span class="line">            ),</span><br><span class="line">        ),</span><br><span class="line">    ),</span><br><span class="line">    collisions=(my_collision_cfg,),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>spec_fn</code>
+<ul>
+<li>一个返回<code>mujoco.MjSpec</code>的可调用对象。</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单情况</span></span><br><span class="line">spec_fn = <span class="keyword">lambda</span>: mujoco.MjSpec.from_file(<span class="string">&quot;robot.xml&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复杂操作</span></span><br><span class="line"><span class="comment"># 在返回之前可以进行任何操作（添加实体、更改关节限位、更换材质或者完全不使用XML文件，以编程的方式构建整个模型</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_spec</span>() -&gt; mujoco.MjSpec:</span><br><span class="line">    <span class="keyword">return</span> mujoco.MjSpec.from_file(<span class="built_in">str</span>(ROBOT_XML))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>init_state</code>
+<ul>
+<li>默认的root姿态、root速度和关节位置/速度</li>
+<li><code>joint_pose</code>和<code>joint_vel</code>是字典，用于将正则表达式模式映射到值，模式会按照顺序与关节名称进行匹配</li>
+<li>设置<code>joint_pose=None</code>以使用MJCF模型中的关键帧，而不是在此处定义值。</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">init_state = EntityCfg.InitialStateCfg(</span><br><span class="line">    pos=(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.8</span>),       <span class="comment"># root position</span></span><br><span class="line">    rot=(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>),  <span class="comment"># root quaternion (w, x, y, z)</span></span><br><span class="line">    joint_pos=&#123;</span><br><span class="line">        <span class="string">&quot;.*&quot;</span>: <span class="number">0.0</span>,              <span class="comment"># all joints to zero</span></span><br><span class="line">        <span class="string">&quot;.*_hip_.*&quot;</span>: <span class="number">0.5</span>,       <span class="comment"># then override hips to 0.5</span></span><br><span class="line">    &#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>articulation</p>
+<ul>
+<li>执行器配置，仅当entity具有可驱动关节时才需要此字段</li>
+</ul></li>
+<li><p>Hetergeneous worlds</p>
+<ul>
+<li>需要在不同的并行世界中使用不同的网格资源的场景，使用<code>VariantEntityCfg</code>而不是<code>EntityCfg</code></li>
+</ul></li>
+<li><p>Entity提供了<code>find_*</code>方法，这些方法接受正则表达式并返回匹配的元素索引和名称</p></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ids, names = entity.find_joints((<span class="string">&quot;.*_hip_.*&quot;</span>, <span class="string">&quot;.*_knee_.*&quot;</span>))</span><br><span class="line">ids, names = entity.find_geoms((<span class="string">&quot;.*foot.*&quot;</span>,))</span><br><span class="line">ids, names = entity.find_bodies((<span class="string">&quot;.*&quot;</span>,))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>reading runtime state（读取运行时状态）
+<ul>
+<li>EntityData
+<ul>
+<li><code>entity.data</code>是奖励、观察和终止函数的主要接口。它公开运动学状态（姿态、速度、加速度）、执行器力、广义力以及导出的体坐标系量（例如投影重力），所有这些都以形状为<code>(num_envs, ...)</code>的
+PyTorch 张量形式呈现。</li>
+</ul></li>
+<li>Sensors 传感器
+<ul>
+<li>传感器在scene中配置，不是在单个Entity上配置。传感器可以引用实体元素（例如，机器人脚上的接触传感器、连接到身体某个部位的加速度传感器），也可以独立于任何实体。</li>
+<li>在运行时传感器通过<code>env.scene</code>按名称访问</li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">angular_momentum_penalty</span>(<span class="params">env, sensor_name: <span class="built_in">str</span></span>) -&gt; torch.Tensor:</span><br><span class="line">    sensor = env.scene[sensor_name]</span><br><span class="line">    <span class="keyword">return</span> torch.<span class="built_in">sum</span>(torch.square(sensor.data), dim=-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ul>
+<li>raw simulation data(原始仿真数据)
+<ul>
+<li>对于EntityData或传感器未涵盖的任何内容，可通过<code>env.sim.data</code>
+和<code>env.sim.model</code>访问低层Mujoco
+Warp数组，这些文件以oytorch张量的形式暴露mjData和mjModel的所有字段</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="actutors">Actutors</h3>
+<ul>
+<li>actutors将高级指令(位置、速度、力度)转换为驱动关节的底层力，通过EntityCfg的<code>articulation</code>字段配置，提供内置执行器和显式执行器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.actutor <span class="keyword">import</span> BuiltinPositionActuatorCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.entity <span class="keyword">import</span> EntityCfg, EntityArticulationInfoCfg</span><br><span class="line"></span><br><span class="line">robot_cfg = EntityCfg(</span><br><span class="line">  spec_fn = <span class="keyword">lambda</span>: load_robot_spec()</span><br><span class="line">  articulation=EntityArticulationInfoCfg(</span><br><span class="line">    actuators=(</span><br><span class="line">      BuiltinPositionActuatorsCfg(</span><br><span class="line">        target_name_expr=(<span class="string">&quot;.*_hip_.*&quot;</span>, <span class="string">&quot;.*_knee_.*&quot;</span>),</span><br><span class="line">        stiffness=<span class="number">80.0</span>,</span><br><span class="line">        damping=<span class="number">10.0</span>,</span><br><span class="line">        effort_limit=<span class="number">100.0</span></span><br><span class="line">      ),</span><br><span class="line">    ),</span><br><span class="line">  ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="actuators-types">Actuators types</h4>
+<ul>
+<li><p>所有actuators都共享从<code>Actuatorsfg</code>继承的公共字段</p>
+<ul>
+<li><code>target_names_expr</code>：与关节名称匹配的正则表达式模式元组</li>
+<li><code>armature</code>：折算到目标关节处的转子转动惯量</li>
+<li><code>frictionloss</code>：静摩擦在目标关节处被建模为一个约束条件</li>
+</ul></li>
+<li><p>Built-in actuators</p>
+<ul>
+<li><code>BuiltinPositionActuators</code>：创建用于PD控制的<code>&lt;position&gt;</code>执行器</li>
+<li><code>BuiltinVelocityActuators</code>：速度控制器</li>
+<li><code>BuiltinmotorActuators</code>：直接扭矩控制的控制器</li>
+<li><code>BuiltinPdActutors</code>：原生PD控制,同时跟踪位置指令和速度指令。实现方式为成对的<code>&lt;position&gt;</code>+<code>&lt;velocity&gt;</code>执行器，总和为<code>kp * (p_target - q) + kd * (v_target - qdot)</code></li>
+<li><code>ButinDcMotorActuators</code>：封装了Mujoco的原生直流电机元件.</li>
+<li><code>BuiltinMuscleActuators</code>：创建具有力-长度-速度特性的仿生肌肉动力学<code>&lt;muscle&gt;</code>执行器</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.actuator <span class="keyword">import</span> BuiltinPositionActuatorCfg, BuiltinVelocityActuatorCfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># Mobile manipulator: PD for arm joints, velocity control for wheels.</span></span><br><span class="line">actuators = (</span><br><span class="line">    BuiltinPositionActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_shoulder_.*&quot;</span>, <span class="string">&quot;.*_elbow_.*&quot;</span>, <span class="string">&quot;.*_wrist_.*&quot;</span>),</span><br><span class="line">        stiffness=<span class="number">100.0</span>,</span><br><span class="line">        damping=<span class="number">10.0</span>,</span><br><span class="line">        effort_limit=<span class="number">150.0</span>,</span><br><span class="line">    ),</span><br><span class="line">    BuiltinVelocityActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_wheel_.*&quot;</span>,),</span><br><span class="line">        damping=<span class="number">20.0</span>,</span><br><span class="line">        effort_limit=<span class="number">50.0</span>,</span><br><span class="line">    ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Explicit actuators（
+<ul>
+<li><code>IdealPdActuator</code>：实现理想的 PD 控制器。扭矩计算公式为：
+<code>tau = Kp * pos_error + Kd * vel_error</code></li>
+<li><code>DcMotorActuator</code>：扩展<code>IdealPdActuator</code>，通过速度依赖的扭矩饱和来模拟直流电机的扭矩-速度曲线（反电动势效应）。实现线性扭矩-速度曲线：零速度时最大扭矩，最大速度时零扭矩。</li>
+<li><code>LearnedMlpActuator</code>：一种基于神经网络的执行器，它使用训练好的多层感知器（MLP）根据关节状态历史预测扭矩输出。当分析模型无法捕捉复杂的执行器动力学特性（例如延迟、非线性和摩擦效应）时，该执行器非常有用。它继承了直流电机基于速度的扭矩限制。</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.actuator <span class="keyword">import</span> IdealPdActuatorCfg, DcMotorActuatorCfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ideal PD for hips, DC motor model with torque-speed curve for knees.</span></span><br><span class="line">actuators = (</span><br><span class="line">    IdealPdActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_hip_.*&quot;</span>,),</span><br><span class="line">        stiffness=<span class="number">80.0</span>,</span><br><span class="line">        damping=<span class="number">10.0</span>,</span><br><span class="line">        effort_limit=<span class="number">100.0</span>,</span><br><span class="line">    ),</span><br><span class="line">    DcMotorActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_knee_.*&quot;</span>,),</span><br><span class="line">        stiffness=<span class="number">80.0</span>,</span><br><span class="line">        damping=<span class="number">10.0</span>,</span><br><span class="line">        effort_limit=<span class="number">25.0</span>,       <span class="comment"># Continuous torque limit</span></span><br><span class="line">        saturation_effort=<span class="number">50.0</span>,  <span class="comment"># Peak torque at stall</span></span><br><span class="line">        velocity_limit=<span class="number">30.0</span>,     <span class="comment"># No-load speed (rad/s)</span></span><br><span class="line">    ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="xml执行器">XML执行器</h4>
+<ul>
+<li>XML执行器封装了机器人XML文件中以定义的执行器，配置程序通过将执行器的<code>target</code>关节名称与<code>target_names_expr</code>模式进行匹配来查找现有执行器。每个关节恰好对应一个执行器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.actuator <span class="keyword">import</span> XmlActuatorCfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># Robot XML already has:</span></span><br><span class="line"><span class="comment"># &lt;actuator&gt;</span></span><br><span class="line"><span class="comment">#   &lt;position name=&quot;hip_joint&quot; joint=&quot;hip_joint&quot; kp=&quot;100&quot;/&gt;</span></span><br><span class="line"><span class="comment"># &lt;/actuator&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Wrap existing XML actuators.</span></span><br><span class="line">actuators = (</span><br><span class="line">    XmlActuatorCfg(target_names_expr=(<span class="string">&quot;hip_joint&quot;</span>,)),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="执行器延迟">执行器延迟</h4>
+<ul>
+<li>任何执行器配置都支持内联延迟字段，用于模拟命令延迟。在实际机器人中，板载
+PD 回路以 kHz
+的频率运行，并可直接访问编码器，但由于推理时间和通信总线周期，策略中的位置目标到达时间会延迟。执行器延迟可以模拟这种情况：命令目标虽然延迟，但控制律仍然能够获取最新的关节状态。</li>
+<li>与观测延迟共同构成往返过程的两个环节传感器到策略再到电机</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.actuators <span class="keyword">import</span> IdealPdActuatorsCfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add 2-5 step delay to position commands</span></span><br><span class="line">actuators = (</span><br><span class="line">  IdealPdActuatorsCfg(</span><br><span class="line">    target_names_expr=(<span class="string">&quot;.*&quot;</span>,),</span><br><span class="line">    stiffness=<span class="number">80.0</span>,</span><br><span class="line">    damping=<span class="number">10.0</span>,</span><br><span class="line">    delay_min_lag=<span class="number">2</span>,</span><br><span class="line">    delay_max_lag=<span class="number">5</span>,</span><br><span class="line">    delay_hold_prob=<span class="number">0.3</span>,         <span class="comment"># 30% chance to keep current lag</span></span><br><span class="line">    delay_update_period=<span class="number">10</span>,      <span class="comment"># Resample lag every 10 steps</span></span><br><span class="line">  ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写执行器配置">编写执行器配置</h4>
+<ul>
+<li>由于在每个配置中执行器参数是统一的，因此需要不同参数的关节应使用单独的执行器配置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.actuator <span class="keyword">import</span> BuiltinPositionActuatorCfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># G1 humanoid with different gains per joint group.</span></span><br><span class="line">G1_ACTUATORS = (</span><br><span class="line">    BuiltinPositionActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_hip_.*&quot;</span>, <span class="string">&quot;waist_yaw_joint&quot;</span>),</span><br><span class="line">        stiffness=<span class="number">180.0</span>,</span><br><span class="line">        damping=<span class="number">18.0</span>,</span><br><span class="line">        effort_limit=<span class="number">88.0</span>,</span><br><span class="line">        armature=<span class="number">0.0015</span>,</span><br><span class="line">    ),</span><br><span class="line">    BuiltinPositionActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;left_hip_pitch_joint&quot;</span>, <span class="string">&quot;right_hip_pitch_joint&quot;</span>),</span><br><span class="line">        stiffness=<span class="number">200.0</span>,</span><br><span class="line">        damping=<span class="number">20.0</span>,</span><br><span class="line">        effort_limit=<span class="number">88.0</span>,</span><br><span class="line">        armature=<span class="number">0.0015</span>,</span><br><span class="line">    ),</span><br><span class="line">    BuiltinPositionActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_knee_joint&quot;</span>,),</span><br><span class="line">        stiffness=<span class="number">150.0</span>,</span><br><span class="line">        damping=<span class="number">15.0</span>,</span><br><span class="line">        effort_limit=<span class="number">139.0</span>,</span><br><span class="line">        armature=<span class="number">0.0025</span>,</span><br><span class="line">    ),</span><br><span class="line">    BuiltinPositionActuatorCfg(</span><br><span class="line">        target_names_expr=(<span class="string">&quot;.*_ankle_.*&quot;</span>,),</span><br><span class="line">        stiffness=<span class="number">40.0</span>,</span><br><span class="line">        damping=<span class="number">5.0</span>,</span><br><span class="line">        effort_limit=<span class="number">25.0</span>,</span><br><span class="line">        armature=<span class="number">0.0008</span>,</span><br><span class="line">    ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="sensors">Sensors</h3>
+<ul>
+<li>传感器位于<code>Entity</code>实体数据和mjlab数据访问层次结构中的原始模拟数组之间</li>
+<li>传感器在场景级别配置，而不是在单个实体级别配置的。传感器可以引用实体元素，但也可以是完全独立于任何实体的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.sensor <span class="keyword">import</span> (</span><br><span class="line">    BuiltinSensorCfg, ContactSensorCfg, ContactMatch, ObjRef,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># A robot with an IMU accelerometer and foot contact detection.</span></span><br><span class="line">scene_cfg = SceneCfg(</span><br><span class="line">    entities=&#123;<span class="string">&quot;robot&quot;</span>: robot_cfg&#125;,</span><br><span class="line">    sensors=(</span><br><span class="line">        BuiltinSensorCfg(</span><br><span class="line">            name=<span class="string">&quot;imu_acc&quot;</span>,</span><br><span class="line">            sensor_type=<span class="string">&quot;accelerometer&quot;</span>,</span><br><span class="line">            obj=ObjRef(<span class="built_in">type</span>=<span class="string">&quot;site&quot;</span>, name=<span class="string">&quot;imu_site&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>),</span><br><span class="line">        ),</span><br><span class="line">        ContactSensorCfg(</span><br><span class="line">            name=<span class="string">&quot;feet_contact&quot;</span>,</span><br><span class="line">            primary=ContactMatch(</span><br><span class="line">                mode=<span class="string">&quot;geom&quot;</span>, pattern=<span class="string">r&quot;.*_foot$&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">            ),</span><br><span class="line">            secondary=ContactMatch(mode=<span class="string">&quot;body&quot;</span>, pattern=<span class="string">&quot;terrain&quot;</span>),</span><br><span class="line">            fields=(<span class="string">&quot;found&quot;</span>, <span class="string">&quot;force&quot;</span>),</span><br><span class="line">        ),</span><br><span class="line">    ),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Access at runtime.</span></span><br><span class="line">imu = env.scene[<span class="string">&quot;robot/imu_acc&quot;</span>].data        <span class="comment"># [B, 3] acceleration</span></span><br><span class="line">feet = env.scene[<span class="string">&quot;feet_contact&quot;</span>].data         <span class="comment"># ContactData</span></span><br><span class="line">feet.found                                    <span class="comment"># [B, P] contact count per foot</span></span><br><span class="line">feet.force                                    <span class="comment"># [B, P, 3] contact force per foot</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mjlab提供四种传感器类型
+<ul>
+<li>用于原生Mujoco测量的<code>BuiltinSensor</code></li>
+<li>用于结构化接触检测的<code>ContactSensor</code></li>
+<li>用于GPU加速的光线投射的<code>RayCastSensors</code></li>
+<li>用于RGB-D渲染的<code>CameraSensors</code></li>
+</ul></li>
+</ul>
+<h4 id="builtinsensor">BuiltinSensor</h4>
+<ul>
+<li><code>BuiltinSensor</code>封装了Mujoco的原生传感器。每个传感器都通过<code>ObjRef</code>连接到Mujoco元素（site、joint、body等），并返回一个形状为<code>[num_envs,dim]</code>的torch张量</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>类别</th>
+<th>可用传感器</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Site</td>
+<td>accelerometer, velocimeter, gyro, force, torque, magnetometer,
+rangefinder</td>
+</tr>
+<tr class="even">
+<td>Joint</td>
+<td>jointpos, jointvel, jointlimitpos, jointlimitvel, jointlimitfrc,
+jointactuatorfrc</td>
+</tr>
+<tr class="odd">
+<td>Frame</td>
+<td>framepos, framequat, framexaxis, frameyaxis, framezaxis,
+framelinvel, frameangvel, framelinacc, frameangacc</td>
+</tr>
+<tr class="even">
+<td>Other</td>
+<td>actuatorpos, actuatorvel, actuatorfrc, subtreecom, subtreelinvel,
+subtreeangmom, clock, e_potential, e_kinetic</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>ObjRef用于标识传感器连接到哪个Mujoco元素上，<code>Entity</code>字段将查找范围限定在特定实体的命名空间内，传感器名称会自动添加相应的前缀（例如，实体<code>"robot"</code>上的<code>"imu_acc"</code>变为<code>"robot/imu_acc"</code>）。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.sensor <span class="keyword">import</span> BuiltinSensorCfg, ObjRef</span><br><span class="line"></span><br><span class="line"><span class="comment"># Accelerometer attached to a site.</span></span><br><span class="line">BuiltinSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;imu_acc&quot;</span>,</span><br><span class="line">    sensor_type=<span class="string">&quot;accelerometer&quot;</span>,</span><br><span class="line">    obj=ObjRef(<span class="built_in">type</span>=<span class="string">&quot;site&quot;</span>, name=<span class="string">&quot;imu_site&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Joint limit sensor with output clamping.</span></span><br><span class="line">BuiltinSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;knee_limit&quot;</span>,</span><br><span class="line">    sensor_type=<span class="string">&quot;jointlimitpos&quot;</span>,</span><br><span class="line">    obj=ObjRef(<span class="built_in">type</span>=<span class="string">&quot;joint&quot;</span>, name=<span class="string">&quot;knee_joint&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>),</span><br><span class="line">    cutoff=<span class="number">0.1</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Relative frame position (end-effector w.r.t. base).</span></span><br><span class="line">BuiltinSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;ee_pos&quot;</span>,</span><br><span class="line">    sensor_type=<span class="string">&quot;framepos&quot;</span>,</span><br><span class="line">    obj=ObjRef(<span class="built_in">type</span>=<span class="string">&quot;body&quot;</span>, name=<span class="string">&quot;end_effector&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>),</span><br><span class="line">    ref=ObjRef(<span class="built_in">type</span>=<span class="string">&quot;body&quot;</span>, name=<span class="string">&quot;base&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实体XML中已定义的传感器会在场景合成过程中自动被发现，并加上实体名称前缀。无需为这些传感器创建<code>BuiltinSensorCfg</code></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- In robot.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">sensor</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">accelerometer</span> <span class="attr">name</span>=<span class="string">&quot;trunk_imu&quot;</span> <span class="attr">site</span>=<span class="string">&quot;imu_site&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jointpos</span> <span class="attr">name</span>=<span class="string">&quot;hip_sensor&quot;</span> <span class="attr">joint</span>=<span class="string">&quot;hip_joint&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">sensor</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Access by prefixed name.</span></span><br><span class="line">imu = env.scene[<span class="string">&quot;robot/trunk_imu&quot;</span>]</span><br><span class="line">hip = env.scene[<span class="string">&quot;robot/hip_sensor&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="contactsnesot">ContactSnesot</h4>
+<ul>
+<li>在每个物理计算步骤中，Mujoco都会生成一个扁平的、非结构化的接触对列表，涵盖整个场景。</li>
+<li>一个脚的几何体可能会同时与地面产生多个接触，并与其他实体的接触交错出现，<code>Contactensor</code>将这个原始列表过滤成关注的接触对，将每个元素的多次接触减少到一个固定数值，并将结果打包成整洁的批量张量。</li>
+</ul>
+<h5 id="primary和secondary">Primary和Secondary</h5>
+<ul>
+<li>接触关系是成对的：通常你想要知道的是“机器人的脚是否接触到了地形？”，而不仅仅是“某物是否接触了某物”。primary
+定义了你要测量的元素（即脚），secondary
+可选地限定了它们接触的对象（即地形）。当 secondary 为 None 时，与
+primary 元素的任何接触都计入其中。</li>
+<li>每侧都通过一个 ContactMatch 进行指定。该模式用于选择 MuJoCo
+元素类型（“geom”、“body”或“subtree”），而模式接受正则表达式或正则表达式元组，用于与实体内的元素名称进行匹配。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.sensor <span class="keyword">import</span> ContactSensorCfg, ContactMatch</span><br><span class="line"></span><br><span class="line"><span class="comment"># Foot geoms contacting the terrain body.</span></span><br><span class="line">ContactSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;feet_ground&quot;</span>,</span><br><span class="line">    primary=ContactMatch(</span><br><span class="line">        mode=<span class="string">&quot;geom&quot;</span>, pattern=<span class="string">r&quot;.*_foot$&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">    ),</span><br><span class="line">    secondary=ContactMatch(mode=<span class="string">&quot;body&quot;</span>, pattern=<span class="string">&quot;terrain&quot;</span>),</span><br><span class="line">    fields=(<span class="string">&quot;found&quot;</span>, <span class="string">&quot;force&quot;</span>),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Self-collision: pelvis subtree against itself.</span></span><br><span class="line">ContactSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;self_collision&quot;</span>,</span><br><span class="line">    primary=ContactMatch(</span><br><span class="line">        mode=<span class="string">&quot;subtree&quot;</span>, pattern=<span class="string">&quot;pelvis&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">    ),</span><br><span class="line">    secondary=ContactMatch(</span><br><span class="line">        mode=<span class="string">&quot;subtree&quot;</span>, pattern=<span class="string">&quot;pelvis&quot;</span>, entity=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">    ),</span><br><span class="line">    fields=(<span class="string">&quot;found&quot;</span>,),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="rgb-d-sensor">RGB-D Sensor</h4>
+<ul>
+<li>对现有相机进行封装：MJCF模型以定义相机，通过<code>camera_name</code>传递其名称，传感器将使用模型中相机的位置、方向和视场角</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Wrap the camera named &quot;front_cam&quot; in the robot&#x27;s XML.</span></span><br><span class="line">CameraSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;front&quot;</span>,</span><br><span class="line">    camera_name=<span class="string">&quot;robot/front_cam&quot;</span>,</span><br><span class="line">    data_types=(<span class="string">&quot;rgb&quot;</span>,),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建一个新相机：当<code>camera_name</code>为None（默认值）时，传感器会在场景构建期间向MjSpec添加一个新摄像机。指定pos、quat以及可选的fovy来放置相机</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fixed overhead camera on the worldbody.</span></span><br><span class="line">CameraSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;overhead&quot;</span>,</span><br><span class="line">    pos=(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">2.0</span>),</span><br><span class="line">    quat=(<span class="number">0.0</span>, <span class="number">0.707</span>, <span class="number">0.707</span>, <span class="number">0.0</span>),</span><br><span class="line">    fovy=<span class="number">60.0</span>,</span><br><span class="line">    width=<span class="number">320</span>,</span><br><span class="line">    height=<span class="number">240</span>,</span><br><span class="line">    data_types=(<span class="string">&quot;rgb&quot;</span>, <span class="string">&quot;depth&quot;</span>),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Mujoco支持两种定义相机投影的方式
+<ul>
+<li>基于视场角（FOV）</li>
+<li>基于相机内参：为了匹配真实的相机硬件，MuJoCo 相机可以通过
+sensorsize、focal（或 focalpixel）和 principal（或
+principalpixel）来参数化。这些字段在 MJCF XML
+中设置，并提供对内参矩阵的直接控制。当存在内参时，MuJoCo 会忽略
+fovy。</li>
+</ul></li>
+<li>设置<code>parent_body</code>可以将新摄像机附加到特定物体上，而不是世界物体上，这样相机的pos和quat坐标相对于parent的坐标，相机会随物体一起运动</li>
+<li>数据类型
+<ul>
+<li>rgb：[B, H, W, 3] uint8，彩色图像</li>
+<li>depth：[B, H, W, 1] float32，深度图像</li>
+<li>segmentation：[B, H, W, 2]
+int32，输入分割，通道0存储对象ID，通道1存储MuJoCo对象类型。背景像素为（-1，-1）</li>
+</ul></li>
+<li>渲染设置
+<ul>
+<li>场景中的所有摄像机传感器必须将
+<code>use_textures</code>、<code>use_shadows</code> 和
+<code>enabled_geom_groups</code> 设置为相同的值。这是底层 MuJoCo Warp
+渲染系统的限制，该系统为所有摄像机使用同一个
+RenderContext。如果设置不一致，在构建场景时会引发 ValueError 异常。</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># These two cameras must agree on render settings.</span></span><br><span class="line">cam_a = CameraSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;cam_a&quot;</span>,</span><br><span class="line">    camera_name=<span class="string">&quot;robot/front_cam&quot;</span>,</span><br><span class="line">    use_textures=<span class="literal">True</span>,</span><br><span class="line">    use_shadows=<span class="literal">False</span>,</span><br><span class="line">    enabled_geom_groups=(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>),</span><br><span class="line">    data_types=(<span class="string">&quot;rgb&quot;</span>,),</span><br><span class="line">)</span><br><span class="line">cam_b = CameraSensorCfg(</span><br><span class="line">    name=<span class="string">&quot;cam_b&quot;</span>,</span><br><span class="line">    camera_name=<span class="string">&quot;robot/wrist_cam&quot;</span>,</span><br><span class="line">    use_textures=<span class="literal">True</span>,       <span class="comment"># Must match cam_a</span></span><br><span class="line">    use_shadows=<span class="literal">False</span>,       <span class="comment"># Must match cam_a</span></span><br><span class="line">    enabled_geom_groups=(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>),  <span class="comment"># Must match cam_a</span></span><br><span class="line">    data_types=(<span class="string">&quot;depth&quot;</span>,),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出:<code>CameraSensorData</code>是一个数据类，每种数据类型有一个字段。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CameraSensorData</span>:</span><br><span class="line">    rgb: Tensor | <span class="literal">None</span>      <span class="comment"># [B, H, W, 3] uint8</span></span><br><span class="line">    depth: Tensor | <span class="literal">None</span>    <span class="comment"># [B, H, W, 1] float32</span></span><br><span class="line">    segmentation: Tensor | <span class="literal">None</span>  <span class="comment"># [B, H, W, 2] int32</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="scene">Scene</h3>
+<ul>
+<li>场景将实体、地形和传感器合并到一个单一的仿真中，SceneCfg
+描述了世界的内容，而 Scene 类负责 MJCF
+的组合、编译以及运行时状态管理。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.scene <span class="keyword">import</span> SceneCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.terrains <span class="keyword">import</span> TerrainEntityCfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># A robot on a flat ground plane with 4096 parallel environments.</span></span><br><span class="line">scene_cfg = SceneCfg(</span><br><span class="line">    num_envs=<span class="number">4096</span>,</span><br><span class="line">    env_spacing=<span class="number">2.5</span>,</span><br><span class="line">    terrain=TerrainEntityCfg(terrain_type=<span class="string">&quot;plane&quot;</span>),</span><br><span class="line">    entities=&#123;<span class="string">&quot;robot&quot;</span>: robot_cfg&#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.scene <span class="keyword">import</span> SceneCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.terrains <span class="keyword">import</span> TerrainEntityCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.terrains.config <span class="keyword">import</span> ROUGH_TERRAINS_CFG</span><br><span class="line"><span class="keyword">from</span> mjlab.sensor <span class="keyword">import</span> RayCastSensorCfg, ContactSensorCfg</span><br><span class="line"></span><br><span class="line">scene_cfg = SceneCfg(</span><br><span class="line">    num_envs=<span class="number">4096</span>,</span><br><span class="line">    terrain=TerrainEntityCfg(</span><br><span class="line">        terrain_type=<span class="string">&quot;generator&quot;</span>,</span><br><span class="line">        terrain_generator=ROUGH_TERRAINS_CFG,</span><br><span class="line">        max_init_terrain_level=<span class="number">5</span>,</span><br><span class="line">    ),</span><br><span class="line">    entities=&#123;</span><br><span class="line">        <span class="string">&quot;robot&quot;</span>: robot_cfg,</span><br><span class="line">        <span class="string">&quot;cube&quot;</span>: cube_cfg,</span><br><span class="line">    &#125;,</span><br><span class="line">    sensors=(</span><br><span class="line">        RayCastSensorCfg(name=<span class="string">&quot;terrain_scan&quot;</span>, ...),</span><br><span class="line">        ContactSensorCfg(name=<span class="string">&quot;feet_contact&quot;</span>, ...),</span><br><span class="line">    ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>场景从一个根 MjSpec
+开始，并将每个实体的规格以唯一的名称前缀附加到其中。一个名为 “robot”
+的机器人实体，其所有内部的 MuJoCo
+元素（刚体、关节、几何体、执行器、传感器）都带有 robot/ 前缀，因此
+base_link 变为 robot/base_link，joint0 变为
+robot/joint0，依此类推。使用前缀可以防止当多个实体共享元素名称时出现名称冲突，并为观察值和奖励项提供一致的命名空间。</li>
+<li>地形（如有）以无前缀的方式附加（其元素位于全局命名空间中）。传感器在实体之后添加，并可通过带前缀的名称引用实体元素。</li>
+<li><code>scene.compile()</code>将组合后的 MjSpec 转换为单个
+MjModel。</li>
+<li><code>scene.to_zip(path)</code>将编译后的模型导出为 .zip
+文件,以便在独立的 MuJoCo
+查看器中进行离线查看。每个实体的初始状态关键帧都会合并到导出文件中，因此模型会以其默认姿态打开。</li>
+</ul>
+<h3 id="terrain地形">Terrain(地形)</h3>
+<ul>
+<li>mjlab
+支持两种模式：一种是平坦地面，适用于不需要变化地形的任务；另一种是程序化地形生成器，它可以生成难度可配置的地下地形网格。</li>
+<li>Flat terrain（平坦地形）：默认模式。单个地面，建模为 MuJoCo
+平面几何体，不包含任何程序生成的几何体。环境以规则网格排列，间距由
+SceneCfg 中的 env_spacing 控制。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.terrains <span class="keyword">import</span> TerrainEntityCfg</span><br><span class="line"></span><br><span class="line">terrain = TerrainEntityCfg(terrain_type=<span class="string">&quot;plane&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Procedural
+terrain(程序化地形)：对于受地形多样性影响的任务（如运动、导航），TerrainGeneratorCfg
+会组装一个矩形的子地形网格。每个地块都由一个 SubTerrainCfg
+生成，该配置定义了几何形状及其随难度的缩放方式。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.terrains <span class="keyword">import</span> TerrainEntityCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.terrains.terrain_generator <span class="keyword">import</span> TerrainGeneratorCfg</span><br><span class="line"><span class="keyword">import</span> mjlab.terrains <span class="keyword">as</span> terrain_gen</span><br><span class="line"></span><br><span class="line">terrain = TerrainEntityCfg(</span><br><span class="line">    terrain_type=<span class="string">&quot;generator&quot;</span>,</span><br><span class="line">    terrain_generator=TerrainGeneratorCfg(</span><br><span class="line">        size=(<span class="number">8.0</span>, <span class="number">8.0</span>),</span><br><span class="line">        num_rows=<span class="number">10</span>,</span><br><span class="line">        border_width=<span class="number">20.0</span>,</span><br><span class="line">        curriculum=<span class="literal">True</span>,</span><br><span class="line">        sub_terrains=&#123;</span><br><span class="line">            <span class="string">&quot;flat&quot;</span>: terrain_gen.BoxFlatTerrainCfg(proportion=<span class="number">0.2</span>),</span><br><span class="line">            <span class="string">&quot;stairs&quot;</span>: terrain_gen.BoxPyramidStairsTerrainCfg(</span><br><span class="line">                proportion=<span class="number">0.4</span>,</span><br><span class="line">                step_height_range=(<span class="number">0.0</span>, <span class="number">0.15</span>),</span><br><span class="line">                step_width=<span class="number">0.3</span>,</span><br><span class="line">                platform_width=<span class="number">2.0</span>,</span><br><span class="line">            ),</span><br><span class="line">            <span class="string">&quot;rough&quot;</span>: terrain_gen.HfRandomUniformTerrainCfg(</span><br><span class="line">                proportion=<span class="number">0.4</span>,</span><br><span class="line">                noise_range=(<span class="number">0.02</span>, <span class="number">0.10</span>),</span><br><span class="line">                noise_step=<span class="number">0.02</span>,</span><br><span class="line">            ),</span><br><span class="line">        &#125;,</span><br><span class="line">    ),</span><br><span class="line">    max_init_terrain_level=<span class="number">5</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>地形类型在网格中的分布方式
+<ul>
+<li>Curriculum
+mode(<code>curriculum=True</code>),每种地形类型对应一列；生成器会使用
+len(sub_terrains) 列，无论 num_cols
+的值是多少。同一列中的所有地块都属于同一种地形类型，难度从第 0
+行（最简单）逐渐增加到第 num_rows - 1 行（最难）。proportion
+字段控制的是机器人在生成时在各列中的分布情况，而非列的数量。正是这种结构化的布局，使得课程系统能够随着机器人表现的提升，将环境逐步推进到难度更高的行。</li>
+<li>Random
+mode(<code>curriculum=True</code>),每个区域都会独立采样一种按比例加权的地形类型，并从
+difficulty_range 中选取一个难度值。系统会遵循 num_cols
+的设置。这种方式能提供最大的多样性，但没有结构化的难度递进。</li>
+</ul></li>
+<li>每个子地形的生成函数都会接收一个<code>difficulty</code>值，该值会线性插值地形的可配置范围。例如，
+<code>BoxPyramidStairsTerrainCfg</code> 函数
+<code>step_height_range=(0.0, 0.2)</code> 在难度 0
+时产生平坦的地面，在难度 1 时产生 20 厘米的台阶。</li>
+</ul>
+<h2 id="the-manager-layer">The Manager Layer</h2>
+<ul>
+<li>单个<code>ManagerBasedRLEnvCfg</code>数据类即可完整定义mjlab环境：物理世界、智能体与物理世界的交互接口，以及定义在上面的MDP。所有内容都位于一个扁平对象中，因此无需遍历层次结构即可检查、复制和修改环境</li>
+<li>Manager所有字段，标有<code>...</code>的为必填字段，其他所有字段均有默认值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass, field    </span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mjlab.envs <span class="keyword">import</span> ManagerBasedRlEnvCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.action_manager <span class="keyword">import</span> ActionTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.command_manager <span class="keyword">import</span> CommandTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.curriculum_manager <span class="keyword">import</span> CurriculumTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.event_manager <span class="keyword">import</span> EventTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.metrics_manager <span class="keyword">import</span> MetricsTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.observation_manager <span class="keyword">import</span> ObservationTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.reward_manager <span class="keyword">import</span> RewardTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.termination_manager <span class="keyword">import</span> TerminationTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.scene.scene <span class="keyword">import</span> SceneCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.sim.sim <span class="keyword">import</span> SimulationCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.viewer.viewer_config <span class="keyword">import</span> ViewerConfig</span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyEnvCfg</span>(<span class="title class_ inherited__">ManagerBasedRlEnvCfg</span>):</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># -- Physics simulation configuration ---</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    decimation: <span class="built_in">int</span> = <span class="number">4</span></span><br><span class="line">    <span class="comment">#每个策略步长对应的物理步数，越大越快，但可能导致不稳定</span></span><br><span class="line">    <span class="comment">#环境步长=decimation*sim.mujoco.timestep</span></span><br><span class="line">    </span><br><span class="line">    sim: SimulationCfg = field(default_factory=SimulationCfg) <span class="comment"># 物理仿真配置</span></span><br><span class="line">    <span class="comment"># 物理参数：时间步长、积分器、求解器、接触设置</span></span><br><span class="line">    <span class="comment"># 默认时间步长为0.002s，积分器为RK4，求解器为Newton，接触设置为默认值，可通过MujocoCfg覆盖</span></span><br><span class="line">    </span><br><span class="line">    scene: SceneCfg= ...</span><br><span class="line">    <span class="comment"># 地形、实体和传感器。同时设置num_envs和num_observations，num_actions由action_manager决定</span></span><br><span class="line">    <span class="comment"># 必须的，无默认值</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ---Episode ----</span></span><br><span class="line">    </span><br><span class="line">    episode_length_s: <span class="built_in">float</span> =<span class="number">20.0</span></span><br><span class="line">    <span class="comment"># 每个episode的最大时长，单位为秒。超过该时长后，episode将被终止。默认值为20秒</span></span><br><span class="line">    <span class="comment"># steps = episode_length_s / (decimation * sim.mujoco.timestep) </span></span><br><span class="line">    </span><br><span class="line">    is_finite_horizon: <span class="built_in">bool</span> = <span class="literal">False</span></span><br><span class="line">    <span class="comment"># 是否为有限时域任务。若为True，则在episode_length_s后终止episode；若为False，则在episode_length_s后继续运行，但不再计算奖励和指标。默认值为False</span></span><br><span class="line">    <span class="comment"># 默认为False</span></span><br><span class="line">    </span><br><span class="line">    scale_rewards_by_dt: <span class="built_in">bool</span> = <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 是否按时间步长缩放奖励。</span></span><br><span class="line">    <span class="comment"># 当True（默认值）时：每步奖励会被乘以时间步长（decimation * sim.mujoco.timestep），以便在不同时间步长下保持奖励的可比性，无论仿真频率多少，仿真1秒内总累计奖励总和大致相同</span></span><br><span class="line">    <span class="comment"># 当False时：奖励不会被缩放，奖励的绝对值可能会随时间步长的变化而变化</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ---Managers---</span></span><br><span class="line">    </span><br><span class="line">    observations: <span class="built_in">dict</span>[<span class="built_in">str</span>, ObservationTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 观测组。每个键都是一个组名（例如 actor， critic）</span></span><br><span class="line">    <span class="comment"># 各观测组在噪声、历史数据、延迟和数据拼接方面可能存在差异</span></span><br><span class="line">    </span><br><span class="line">    actions: <span class="built_in">dict</span>[<span class="built_in">str</span>, ActionTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 动作项，每个项控制策略输出的一个部分，并将其路由到特定实体的执行器</span></span><br><span class="line">    </span><br><span class="line">    rewards: <span class="built_in">dict</span>[<span class="built_in">str</span>, RewardTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 奖励项，管理器在每个步骤中计算一个加权和</span></span><br><span class="line">    </span><br><span class="line">    terminations: <span class="built_in">dict</span>[<span class="built_in">str</span>, TerminationTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 终止条件，如果为空，则事件绝不会提前终止</span></span><br><span class="line">    <span class="comment"># 添加一个time_out项以强制确定回合长度限制</span></span><br><span class="line">    </span><br><span class="line">    events: <span class="built_in">dict</span>[<span class="built_in">str</span>, EventTermCfg] = field(</span><br><span class="line">        default_factory=<span class="keyword">lambda</span>:&#123;</span><br><span class="line">            <span class="string">&quot;reset_scene_to_default&quot;</span>: EventTermCfg(</span><br><span class="line">                func=reset_scene_to_default,</span><br><span class="line">                mode=<span class="string">&quot;reset&quot;</span>,</span><br><span class="line">            )</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 事件项，用于场景随机化和状态重置</span></span><br><span class="line">    <span class="comment"># 默认设置包含reset_scene_t0_default，该设置会在每个回合将所有实体重置为初始姿态，覆盖此字典以替换或拓展默认的重置行为</span></span><br><span class="line">    </span><br><span class="line">    commands: <span class="built_in">dict</span>[<span class="built_in">str</span>, CommandTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 命令生成器（例如用于运动的速度目标）</span></span><br><span class="line">    <span class="comment"># 命令会在可配置的时间间隔内以及重置时进行重采样</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    curriculum: <span class="built_in">dict</span>[<span class="built_in">str</span>, CurriculumTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 根据表现调整训练条件</span></span><br><span class="line">    </span><br><span class="line">    metrics: <span class="built_in">dict</span>[<span class="built_in">str</span>, MetricsTermCfg] = field(default_factory=<span class="built_in">dict</span>)</span><br><span class="line">    <span class="comment"># 自定义指标与reward项一同作为episode平均值进行记录</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># ---Misc---</span></span><br><span class="line">    seed: <span class="built_in">int</span> | <span class="literal">None</span>=<span class="literal">None</span></span><br><span class="line">    <span class="comment">#用于可重复性的随机种子。如果为 None，则会选择一个随机种子</span></span><br><span class="line">    <span class="comment"># 并在初始化后将其存储回此字段中。</span></span><br><span class="line">    </span><br><span class="line">    viewer: ViewerConfig = field(default_factory=ViewerConfig)</span><br><span class="line">    <span class="comment"># 渲染所需的摄像机位置、分辨率和跟踪目标。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>所有Manager字典都遵循相同的模式，每个条目都将一个字符串名称映射到一个术语配置对象，该配置始终至少包含一个func字段，指向该术语的可调用对象，以及一个params字典，包含转发给可调用对象的额外关键字参数</li>
+<li>管理器在每个步骤中调用<code>func(env,**params)</code>（当<code>func</code>是一个以实例化的类时，会调用类的<code>term(env,**params)</code>方法），term名称是任意的，他门出现在训练日志中，仅用于标识</li>
+</ul>
+<h3 id="observations">Observations</h3>
+<ul>
+<li>观测定义了agent在每个步骤中感知到的信息。observation
+manager将各个观测项组装成policy接收的输入张量。meige观测项都会经过一个可配置的处理流程：噪声注入、裁剪、缩放、传感器延迟和历史堆叠</li>
+</ul>
+<h4 id="observation-groups">Observation groups</h4>
+<ul>
+<li>每个组都是一个<code>ObservationGroupCfg</code>，其中包含一个terms字典，该字典将字符串名称映射到<code>ObservationTermCfg</code>条目。manager按照注册顺序在最后一个维度上连接term输出</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.managers.observation_manager <span class="keyword">import</span> (</span><br><span class="line">    ObservationGroupCfg,</span><br><span class="line">    ObservationTermCfg,</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> mjlab.envs.mdp <span class="keyword">import</span> observations <span class="keyword">as</span> obs_fns</span><br><span class="line"></span><br><span class="line">observations = &#123;</span><br><span class="line">    <span class="string">&quot;policy&quot;</span>: ObservationGroupCfg(</span><br><span class="line">        terms=&#123;</span><br><span class="line">            <span class="string">&quot;base_lin_vel&quot;</span>: ObservationTermCfg(func=obs_fns.base_lin_vel),</span><br><span class="line">            <span class="string">&quot;base_ang_vel&quot;</span>: ObservationTermCfg(func=obs_fns.base_ang_vel),</span><br><span class="line">            <span class="string">&quot;projected_gravity&quot;</span>: ObservationTermCfg(</span><br><span class="line">                func=obs_fns.projected_gravity</span><br><span class="line">            ),</span><br><span class="line">            <span class="string">&quot;joint_pos&quot;</span>: ObservationTermCfg(func=obs_fns.joint_pos_rel),</span><br><span class="line">            <span class="string">&quot;joint_vel&quot;</span>: ObservationTermCfg(func=obs_fns.joint_vel_rel),</span><br><span class="line">            <span class="string">&quot;last_action&quot;</span>: ObservationTermCfg(func=obs_fns.last_action),</span><br><span class="line">        &#125;,</span><br><span class="line">        enable_corruption=<span class="literal">True</span>,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>该字典会传递给<code>ManagerBasedRLEnvCfg(observations=...)</code>。observation
+manager在初始化时解析term函数，并在此时非配任何所需的历史或延迟缓冲区</li>
+<li><code>enable_corruption</code>控制整个组的噪声应用：为false时，各term的噪声配置将被忽略。使得在带噪声的actor和无噪声的critic组之间共享term定义变得简单</li>
+</ul>
+<h4 id="progressing-pipeline">Progressing pipeline</h4>
+<ul>
+<li>每个步骤、每个组的每个term都按以下顺序经过以下流程<code>compute noise clip scale delay history</code>
+<ul>
+<li>compute：term function
+被调用，必须返回一个<code>[num_envs, D]</code>张量</li>
+<li>noise：：如果组的<code>enable_corruption=True</code>且该项具有 noise
+配置，则应用噪声。</li>
+<li>clip：如果对term设置了<code>clip=（lo,hi）</code>，则值将被限制在该范围内</li>
+<li>scale：如果设置了scale,则输出将逐元素相乘，接受标量、元组或张量作为参数</li>
+<li>delay：如果<code>delay_max_lag &gt; 0</code>，则该项的输出存储在一个环形缓冲区，返回先前步骤中的值</li>
+<li>history：如果<code>history_length &gt; 0</code>，则过去的输出会被堆叠起来</li>
+</ul></li>
+</ul>
+<h4 id="observation-history-and-delay">observation history and
+delay</h4>
+<ul>
+<li>观测数据支持两个时间特征：历史数据和延迟数据。历史数据将过去的帧堆叠起来，为策略提供时间上下文;延迟数据则通过返回更早时间步的观测数据来模拟传感器延迟</li>
+<li>history
+<ul>
+<li>将<code>history_length</code>设置为 N 会堆叠该项的 N
+个最新输出。当<code>flatten_history_dim=True</code>（默认值）时，历史维度会被折叠到特征维度中，从而生成一个适用于多层感知机（MLP）的<code>[num_envs, N * D]</code>张量。当<code>flatten_history_dim=False</code>时，输出将保留时间维度，形式为<code>[num_envs, N, D]</code>，适用于循环神经网络（RNN）。</li>
+<li>环境重置时，历史缓冲区将被清空，充值后的第一次观察会填充到所有历史槽中，因此策略从零步开始就能接收到有效数据</li>
+</ul></li>
+<li>delay
+<ul>
+<li>将 delay_max_lag &gt; 0
+会启用一个环形缓冲区，该缓冲区存储过去的输出并返回上一步的输出。延迟值以整数步长从
+[delay_min_lag, delay_max_lag]
+中均匀采样。延迟为零时返回当前观测值；延迟为二时返回两步前的观测值。</li>
+</ul></li>
+</ul>
+<h4 id="built-in-observation-functions">Built-in observation
+functions</h4>
+<ul>
+<li>以下函数位于<code>mjlab.envs.mdp.observations</code>
+中（也重新导出为 <code>mjlab.envs.mdp</code>
+）。所有函数都返回<code>[num_envs, D]</code>张量。</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>base_line_vel</code></td>
+<td>机器人底座在基座标系中的线速度</td>
+</tr>
+<tr class="even">
+<td><code>base_ang_vel</code></td>
+<td>机器人底座在基座标系中的角速度</td>
+</tr>
+<tr class="odd">
+<td><code>projected_gravity</code></td>
+<td>投影到基准坐标系中的重力向量。提供了横滚角和俯仰角信息，但未明确表示姿态</td>
+</tr>
+<tr class="even">
+<td><code>joint_pos_rel</code></td>
+<td>相对于默认位姿的关节位置</td>
+</tr>
+<tr class="odd">
+<td><code>joint_vel_rel</code></td>
+<td>相对与默认速度的关节速度</td>
+</tr>
+<tr class="even">
+<td><code>last_action</code></td>
+<td>最新动作张量，可选择性的传入<code>action_name</code>来选择单个动作项</td>
+</tr>
+<tr class="odd">
+<td><code>generated_commands</code></td>
+<td>来自指定命令项的当前命令张量。需要<code>params={"command_name": "&lt;name&gt;"}</code></td>
+</tr>
+<tr class="even">
+<td><code>builtin_sensor</code></td>
+<td>来自指定<code>BuiltinSensor</code>的原始数据（MuJoCo
+传感器数据切片）。需要<code>params={“sensor_name”: “&lt;entity&gt;/&lt;sensor&gt;”}</code></td>
+</tr>
+<tr class="odd">
+<td><code>height_scan</code></td>
+<td><code>RayCastSensor</code>发出的每条光线投射命中点上方的高度。需要
+<code>params={“sensor_name”: “&lt;name&gt;”}</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="自定义observation函数">自定义observation函数</h4>
+<ul>
+<li>观测函数接受<code>env</code>作为其第一个参数，并返回一个<code>[num_envs, D]</code>张量，其他额外参数作为函数参数声明，并通过<code>ObservationTermCfg（params={...}</code>提供</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> mjlab.envs <span class="keyword">import</span> ManagerBasedRlEnv</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.scene_entity_config <span class="keyword">import</span> SceneEntityCfg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_observation</span>(<span class="params"></span></span><br><span class="line"><span class="params">    env: ManagerBasedRlEnv,</span></span><br><span class="line"><span class="params">    asset_cfg: SceneEntityCfg = SceneEntityCfg(<span class="params"><span class="string">&quot;robot&quot;</span></span>),</span></span><br><span class="line"><span class="params"></span>) -&gt; torch.Tensor:</span><br><span class="line">    robot = env.scene[asset_cfg.name]</span><br><span class="line">    <span class="keyword">return</span> robot.data.root_lin_vel_b</span><br></pre></td></tr></table></figure>
+
+<h3 id="action">Action</h3>
+<ul>
+<li>action定义了策略如何控制模拟，动作管理器在每个步骤中接收策略的输出张量，将其拆分为已经注册的动作项，并将每个切片路由到相应Entity的执行器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.envs.mdp.actions <span class="keyword">import</span> JointPositionActionCfg</span><br><span class="line"></span><br><span class="line">actions = &#123;</span><br><span class="line">    <span class="string">&quot;joint_pos&quot;</span>: JointPositionActionCfg(</span><br><span class="line">        entity_name=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">        actuator_names=(<span class="string">&quot;.*&quot;</span>,),   <span class="comment"># regex matching actuator names</span></span><br><span class="line">        scale=<span class="number">0.5</span>,</span><br><span class="line">        use_default_offset=<span class="literal">True</span>,  <span class="comment"># action 0 = default pose</span></span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>所有action类型都共享一组从<code>BaseActionCfg</code>继承的基本参数</p>
+<ul>
+<li><code>EntityName</code>：标识要控制的场景实体</li>
+<li><code>scale</code>：在应用任何偏移量之前，乘以原始策略输出。它接受一个标量或一个将执行器名称模式映射到每个目标值的字典。这可以在映射到物理上有意义的单位时保持策略输出在归一化范围内。缩放后会添加偏移；关节动作类型还提供
+use_default_offset，它会自动加载实体的默认关节位置或速度作为偏移，以便原始输出为零时产生默认姿势。</li>
+<li><code>clip</code>：可选择的在处理后的动作（经过缩放和偏移后）到达执行器之前进行限制。</li>
+</ul></li>
+<li><p>Action types</p></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>JointPositionAction</code></td>
+<td>设置关节位置目标，当<code>use_default_offset=True</code>（默认值）时，策略输出为零即表示采用默认姿态。系统会自动减去<code>dr.encoder_bias</code>设定的编码器偏置，以确保随机偏移量能正确传递到控制命令中</td>
+</tr>
+<tr class="even">
+<td><code>RelativeJointPositionAction</code></td>
+<td>设置相对于当前关节位置的目标关节位置</td>
+</tr>
+<tr class="odd">
+<td><code>JointVelocityAction</code></td>
+<td>设置关节速度目标值</td>
+</tr>
+<tr class="even">
+<td><code>JointEffortAction</code></td>
+<td>直接设置关节力（扭矩），无默认偏移量</td>
+</tr>
+<tr class="odd">
+<td><code>TendonLengthAction</code></td>
+<td>设定肌腱长度</td>
+</tr>
+<tr class="even">
+<td><code>TendonEffortAction</code></td>
+<td>设定肌腱力度</td>
+</tr>
+<tr class="odd">
+<td><code>SiteEffortAction</code></td>
+<td>指定位置施加力和扭矩</td>
+</tr>
+</tbody>
+</table>
+<h4 id="task-space-actions">Task-space actions</h4>
+<ul>
+<li><code>DifferentialIKAction</code>通过带阻尼的最小二乘逆运动学，将笛卡尔坐标系下的位置和姿态指令转换为关节坐标系下的位置目标。每个降采样子步都会执行一次逆运动学运算，因此末端执行器能够在各个子步之间持续跟踪目标，而不仅仅是在策略频率下进行跟踪。
+<ul>
+<li><code>orientation_weight == 0</code>:3D(仅位置)</li>
+<li><code>orientation_weight &gt; 0, use_relative_mode = True</code>:6D(delta
+position + delta axis-angle)</li>
+<li><code>orientation_weight &gt; 0, use_relative_mode = False</code>:7D(absolute
+position + quaternion)</li>
+</ul></li>
+</ul>
+<h4 id="multiple-action-terms">Multiple action terms</h4>
+<ul>
+<li>一个环境可以注册任意数量的term.动作管理器按照注册顺序连接这些term的维度，在相应的边界处分割策略的输出张量，并独立地路由每个切片。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.envs.mdp.actions <span class="keyword">import</span> (</span><br><span class="line">    JointPositionActionCfg,</span><br><span class="line">    JointVelocityActionCfg,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">actions = &#123;</span><br><span class="line">    <span class="string">&quot;arm_joints&quot;</span>: JointPositionActionCfg(</span><br><span class="line">        entity_name=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">        actuator_names=(<span class="string">&quot;.*_arm_.*&quot;</span>,),</span><br><span class="line">        scale=<span class="number">0.5</span>,</span><br><span class="line">    ),</span><br><span class="line">    <span class="string">&quot;wheel_joints&quot;</span>: JointVelocityActionCfg(</span><br><span class="line">        entity_name=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">        actuator_names=(<span class="string">&quot;.*_wheel_.*&quot;</span>,),</span><br><span class="line">        scale=<span class="number">10.0</span>,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="rewards">Rewards</h3>
+<ul>
+<li>每个奖励项都是一个函数，每一步都返回一个针对特定环境的标量值。奖励管理器计算所有奖励项的加权和，并将其返回给训练框架。</li>
+<li>每个项通过名称注册到一个RewardTermCfg，该配置包含可调用项和权重，负权重会产生惩罚</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.envs.mdp <span class="keyword">import</span> rewards</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.reward_manager <span class="keyword">import</span> RewardTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.scene_entity_config <span class="keyword">import</span> SceneEntityCfg</span><br><span class="line"></span><br><span class="line">rewards_cfg = &#123;</span><br><span class="line">    <span class="string">&quot;alive&quot;</span>: RewardTermCfg(func=rewards.is_alive, weight=<span class="number">1.0</span>),</span><br><span class="line">    <span class="string">&quot;joint_torques&quot;</span>: RewardTermCfg(</span><br><span class="line">        func=rewards.joint_torques_l2,</span><br><span class="line">        weight=-<span class="number">1e-4</span>,</span><br><span class="line">        params=&#123;<span class="string">&quot;asset_cfg&quot;</span>: SceneEntityCfg(<span class="string">&quot;robot&quot;</span>)&#125;,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="内置奖励函数">内置奖励函数</h4>
+<ul>
+<li>可在<code>mjlab.envs.mdp.rewards</code>中找到，并且在任务间共享奖励。单个任务有自己的奖励，所有奖励函数返回一个形状为<code>[num_envs]</code>的张量</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>is_alive</code></td>
+<td>对于尚未终止此步骤的环境返回 1.0。与正权重一起使用作为生存奖励</td>
+</tr>
+<tr class="even">
+<td><code>is_terminated</code></td>
+<td>如果环境因非超时原因终止，返回1,使用负权重可以惩罚失败的情况</td>
+</tr>
+<tr class="odd">
+<td><code>joint_torques_l2</code></td>
+<td>执行器力的平方和，惩罚能耗高的动作</td>
+</tr>
+<tr class="even">
+<td><code>joint_vel_l2</code></td>
+<td>关节速度平方和</td>
+</tr>
+<tr class="odd">
+<td><code>action_rate_l2</code></td>
+<td>当前action与前一次action之间的平方差之和，惩罚策略的快速变化</td>
+</tr>
+<tr class="even">
+<td><code>action_acc_l2</code></td>
+<td>二阶动作查分平方和，用于惩罚动作信号中的高频抖动</td>
+</tr>
+<tr class="odd">
+<td><code>joint_pos_limits</code></td>
+<td>关节位置超出soft limits时会受到惩罚，都在限制范围内时，惩罚为0</td>
+</tr>
+<tr class="even">
+<td><code>posture</code>（class）</td>
+<td>指数核函数：用于测量与默认关节的偏差<code>exp(-mean(error^2 / std^2))</code></td>
+</tr>
+<tr class="odd">
+<td><code>electrical_power_cost</code>(class)</td>
+<td>执行器消耗的正机械功总和，再生功率不计入其中</td>
+</tr>
+<tr class="even">
+<td><code>flat_orientation_l2</code></td>
+<td>在基坐标系中投影重力向量的 x 和 y
+分量的平方和。当完全垂直时为零</td>
+</tr>
+</tbody>
+</table>
+<h4 id="按dt进行奖励缩放">按dt进行奖励缩放</h4>
+<ul>
+<li><code>ManagerBasedRlEnvCfg.scale_rewards_by_dt</code>默认值为 True
+。启用此选项后，奖励管理器会在累加奖励之前，将每个奖励项乘以环境步骤的持续时间。这使得片段式奖励总量与模拟频率无关：以
+50 Hz 运行的任务与以 200 Hz
+运行的同一任务产生的预期片段奖励相同，因为每个步骤对总奖励的贡献比例会相应减少</li>
+<li>每个term的episode奖励总额以
+<code>Episode_Reward/&lt;term_name&gt;</code>
+的形式记录，并始终除以该term的持续时间，从而得出一个奖励率，该奖励率在不同term长度的运行中具有可比性</li>
+</ul>
+<h3 id="terminations终止">terminations（终止）</h3>
+<ul>
+<li>终止条件定义了每个episode的结束时机，每个条件都是一个函数，该函数在每一步返回每个环境的布尔张量。termination
+manager汇总所有条件，并将结果作为终止失败或者提前终止报告给训练框架</li>
+<li>每个term通过<code>TerminationTermCfg</code>按名称进行注册，设置<code>time_out=True</code>会将条件标记为截断而非终止失败。截断会映射到
+Gym 接口中的 truncated 信号；失败会映射到
+terminated.代理应该估计截断之后的未来值，但不应该估计故障之后的未来值。</li>
+</ul>
+<h4 id="内置termination函数">内置termination函数</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>time_out</code></td>
+<td>当episode长度达到<code>env.max_episode_length</code>时返回
+True。使用<code>time_out=True</code>注册，以便管理器将其视为截断</td>
+</tr>
+<tr class="even">
+<td><code>bad_orientation</code></td>
+<td>当asset的向上轴与世界向上轴之间的夹角超过
+limit_angle（弧度）时，返回 True</td>
+</tr>
+<tr class="odd">
+<td><code>root_height_blow_minimum</code></td>
+<td>当资产的根链接高度低于 minimum_height（米）时，返回 True</td>
+</tr>
+<tr class="even">
+<td><code>nan_detection</code></td>
+<td>当物理状态中的任何位置出现 NaN 或 Inf 值时，返回
+True。这是一种安全机制，用于干净地终止发散的模拟</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commands">Commands</h3>
+<ul>
+<li>commands指定策略在每个时刻应达到的目标：目标速度、参考轨迹和目标位置。命令管理器生成这些信号，以可配置的时间间隔重新采样它们，并通过观测系统将它们传递给策略。</li>
+<li>commands以字典的形式注册在<code>ManagerBasedRLEnvCfg</code>中，该字典将字符串名称映射到<code>CommandTermCfg</code>实例</li>
+<li><code>resampling_time_range</code>字段控制命令更改的频率，每次重采样后，该项都会从给定的（min,max）秒数范围内均匀抽取一个新的计时器值。每回合重置时，命令也会无条件的进行重采样</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">commands = &#123;</span><br><span class="line">    <span class="string">&quot;twist&quot;</span>: UniformVelocityCommandCfg(</span><br><span class="line">        entity_name=<span class="string">&quot;robot&quot;</span>,</span><br><span class="line">        resampling_time_range=(<span class="number">3.0</span>, <span class="number">8.0</span>),</span><br><span class="line">        ranges=UniformVelocityCommandCfg.Ranges(</span><br><span class="line">            lin_vel_x=(-<span class="number">1.0</span>, <span class="number">1.0</span>),</span><br><span class="line">            lin_vel_y=(-<span class="number">1.0</span>, <span class="number">1.0</span>),</span><br><span class="line">            ang_vel_z=(-<span class="number">0.5</span>, <span class="number">0.5</span>),</span><br><span class="line">        ),</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>generated_commands</code>
+observation函数按名称读取当前命令张量，并将其传递给策略</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ObservationTermCfg(</span><br><span class="line">    func=mdp.generated_commands,</span><br><span class="line">    params=&#123;<span class="string">&quot;command_name&quot;</span>: <span class="string">&quot;twist&quot;</span>&#125;,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="include-command-terms">Include command terms</h4>
+<ul>
+<li>每个任务都有其自身针对特定目标而制定的命令项</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>UniformVelocityCommand</code></td>
+<td>生成从可配置范围内均匀采样的平面速度指令<code>[v_x, v_y, omega_z]</code>。支持静止模式（部分环境接收零速度）和航向模式（偏航角速度被一个跟踪采样航向角的比例控制器所取代）。由速度任务使用</td>
+</tr>
+<tr class="even">
+<td><code>LiftingCommand</code></td>
+<td>为被操作物体生成三维目标位置。支持固定和动态难度模式。跟踪指标包括位置误差和任务成功率。用于操作任务</td>
+</tr>
+<tr class="odd">
+<td><code>MotionCommand</code></td>
+<td>该模块从一个预先录制的 .npz
+运动片段中，以流式（逐帧）方式输出参考关节位置、速度和身体姿态。支持三种起始帧采样模式：‘start’（固定从第
+0
+帧开始）、‘uniform’（均匀随机采样）和‘adaptive’（自适应偏向于困难区域）。在环境重置时，机器人会从采样得到的帧进行初始化，并可选择性地施加扰动（噪声）。该机制应用于（机器人）跟踪任务中</td>
+</tr>
+</tbody>
+</table>
+<h4 id="自定义command-term">自定义command term</h4>
+<ul>
+<li>自定义command
+term是一个继承自<code>CommandTerm</code>的类，并于一个继承自<code>CommandTermCfg</code>的数据配置类配对。必须实现四个方法
+<ul>
+<li><code>_resample_command(env_ids)</code>：用于对新目标采样</li>
+<li><code>_update_command</code>：逐步更新</li>
+<li><code>_update_metrics</code>：记录日志</li>
+<li>一个命令属性，用于返回当前目标张量。</li>
+</ul></li>
+<li>该配置必须实现一个 build(env) 方法，用于构建配对项实例</li>
+</ul>
+<h3 id="events">Events</h3>
+<ul>
+<li>Event
+manager会在环境生命周期的特定节点执行hook。任何需要在启动时、episode重置时或者训练期间定期运行的逻辑都会被注册为事件项</li>
+<li>都通过<code>EventTermCfg</code>进行配置，区别在于控制每个event触发时机的<code>mode</code>字段</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.envs.mdp <span class="keyword">import</span> events <span class="keyword">as</span> event_fns, dr</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.event_manager <span class="keyword">import</span> EventTermCfg</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.scene_entity_config <span class="keyword">import</span> SceneEntityCfg</span><br><span class="line"></span><br><span class="line">events = &#123;</span><br><span class="line">    <span class="comment"># Reset all entities to their default state each episode.</span></span><br><span class="line">    <span class="string">&quot;reset_scene&quot;</span>: EventTermCfg(</span><br><span class="line">        func=event_fns.reset_scene_to_default,</span><br><span class="line">        mode=<span class="string">&quot;reset&quot;</span>,</span><br><span class="line">    ),</span><br><span class="line">    <span class="comment"># Randomize foot friction once at startup.</span></span><br><span class="line">    <span class="string">&quot;foot_friction&quot;</span>: EventTermCfg(</span><br><span class="line">        func=dr.geom_friction,</span><br><span class="line">        mode=<span class="string">&quot;startup&quot;</span>,</span><br><span class="line">        params=&#123;</span><br><span class="line">            <span class="string">&quot;asset_cfg&quot;</span>: SceneEntityCfg(<span class="string">&quot;robot&quot;</span>, geom_names=[<span class="string">&quot;.*foot.*&quot;</span>]),</span><br><span class="line">            <span class="string">&quot;ranges&quot;</span>: (<span class="number">0.3</span>, <span class="number">1.2</span>),</span><br><span class="line">            <span class="string">&quot;operation&quot;</span>: <span class="string">&quot;abs&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ),</span><br><span class="line">    <span class="comment"># Push the robot at random intervals during the episode.</span></span><br><span class="line">    <span class="string">&quot;push_robot&quot;</span>: EventTermCfg(</span><br><span class="line">        func=event_fns.push_by_setting_velocity,</span><br><span class="line">        mode=<span class="string">&quot;interval&quot;</span>,</span><br><span class="line">        interval_range_s=(<span class="number">1.0</span>, <span class="number">3.0</span>),</span><br><span class="line">        params=&#123;</span><br><span class="line">            <span class="string">&quot;velocity_range&quot;</span>: &#123;<span class="string">&quot;x&quot;</span>: (-<span class="number">0.5</span>, <span class="number">0.5</span>), <span class="string">&quot;y&quot;</span>: (-<span class="number">0.5</span>, <span class="number">0.5</span>)&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ),</span><br><span class="line">    <span class="comment"># Transient random impulses with duration and cooldown.</span></span><br><span class="line">    <span class="string">&quot;impulse&quot;</span>: EventTermCfg(</span><br><span class="line">        func=event_fns.apply_body_impulse,</span><br><span class="line">        mode=<span class="string">&quot;step&quot;</span>,</span><br><span class="line">        params=&#123;</span><br><span class="line">            <span class="string">&quot;force_range&quot;</span>: (-<span class="number">50.0</span>, <span class="number">50.0</span>),</span><br><span class="line">            <span class="string">&quot;torque_range&quot;</span>: (<span class="number">0.0</span>, <span class="number">0.0</span>),</span><br><span class="line">            <span class="string">&quot;duration_s&quot;</span>: (<span class="number">0.1</span>, <span class="number">0.2</span>),</span><br><span class="line">            <span class="string">&quot;cooldown_s&quot;</span>: (<span class="number">1.0</span>, <span class="number">3.0</span>),</span><br><span class="line">            <span class="string">&quot;asset_cfg&quot;</span>: SceneEntityCfg(<span class="string">&quot;robot&quot;</span>, body_names=(<span class="string">&quot;base&quot;</span>,)),</span><br><span class="line">        &#125;,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="lifecycle-modes">Lifecycle modes</h4>
+<ul>
+<li><code>EventTermCfg</code>中的<code>mode</code>字段决定了term何时触发
+<ul>
+<li><code>startup</code>：环境初始化期间触发一次，所有管理器构建完成后触发，所有环境同时接收，适用于不同环境间有差异但整个训练过程中保持不变的参数</li>
+<li><code>reset</code>：每次重置场景时触发。状态初始化和场景级域随即初始化都属于此模式。可选的<code>min_step_count_between_reset</code>字段用于防止episode非常短时该项过于频繁触发，上次触发后步数不足的环境跳过该项</li>
+<li><code>interval</code>：以固定的时间间隔触发，频率由<code>interval_rang_s</code>控制，该参数为一个以秒为单位的范围，每次触发后管理器从该范围均匀采样一个新的等待时间。默认情况每个环境都有单独的计时器，设置<code>is_global_time=True</code>,可将所有环境同步到单个共享计时器。</li>
+<li><code>step</code>：适用与所有环境的每个环境步骤，旨在处理需要在每个步中都进行评估的持续效果</li>
+</ul></li>
+</ul>
+<h4 id="built-in-event-functions">Built-in event functions</h4>
+<p>|Function|Description|
+|<code>reset_scene_to_default</code>|将所有实体重置为其默认姿态，<code>ManagerBasedRLEnvCfg</code>的默认evnet|
+|<code>reset_root_site_uniform</code>|重置单个实体的根姿态和速度，并从默认值中以均匀随机偏移。接受包含键<code>“x”、“y”、“z”、“roll”、“pitch”、“yaw”</code>的
+<code>pose_range</code> 和 <code>velocity_range</code>
+字典。方向扰动与默认四元数组合。对于固定底座机器人，这是将其放置在环境原点的唯一方式；如果没有它，它们会堆叠在世界原点|
+|<code>reset_root_state_from_flat_patches</code>|根据环境分配的地形等级和类型，将实体放置在随机选择的平坦地形区域上。若无可用平坦区域，则回退至
+<code>reset_root_state_uniform</code>。此功能适用于机器人需在分配的子地形内平坦地面上生成，以执行移动任务的情况|
+|<code>reset_joints_by_offset</code>|通过在实体的默认值上添加均匀随机偏移来重置关节位置和速度，并限制在软关节限制范围内|
+|<code>push_by_setting_velocity</code>|给entity的当前root
+velocity上添加一个随机速度增量，模拟外部推动力|
+|<code>apply_external_force_torque</code>|通过 MuJoCo
+外部力矩机构，对一个或多个物体施加随机力和扭矩|
+|<code>apply_body_impulse</code>|对物体施加瞬时外力和力矩，持续时间和冷却时间可配置。每个环境独立地随机采样一个力的方向，并保持该方向一段采样的持续时间，然后等待冷却时间后再次施加。支持可选的
+body_point_offset，用于将作用点从质心偏移。包括内置的调试可视化，可以在查看器中绘制力箭头。与
+mode=“step” 一起使用| |<code>randomize_terrain</code>|随机化地形|</p>
+<h4 id="自定义-event-term">自定义 event term</h4>
+<ul>
+<li>event的前两个参数是<code>env</code>和<code>env_ids</code>，其他参数来自<code>EventTermCfg.parmas</code>,会直接修改仿真状态，并且不返回任何值，复杂时间项使用类</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.manager_base <span class="keyword">import</span> ManagerTermBase</span><br><span class="line"><span class="keyword">from</span> mjlab.managers.scene_entity_config <span class="keyword">import</span> SceneEntityCfg</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ResetFromDataset</span>(<span class="title class_ inherited__">ManagerTermBase</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Reset the robot to a random pose from a dataset.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg, env</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(env)</span><br><span class="line">        <span class="variable language_">self</span>._robot = env.scene[<span class="string">&quot;robot&quot;</span>]</span><br><span class="line">        <span class="variable language_">self</span>._poses = torch.load(</span><br><span class="line">            cfg.params[<span class="string">&quot;dataset_path&quot;</span>],</span><br><span class="line">            map_location=env.device,</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, env, env_ids, **kwargs</span>):</span><br><span class="line">        <span class="comment"># Sample with replacement: each env gets an independent pose.</span></span><br><span class="line">        indices = torch.randint(</span><br><span class="line">            <span class="built_in">len</span>(<span class="variable language_">self</span>._poses), (<span class="built_in">len</span>(env_ids),), device=env.device,</span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>._robot.write_joint_position_to_sim(</span><br><span class="line">            <span class="variable language_">self</span>._poses[indices], env_ids=env_ids,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+
+<h3 id="域随即化">域随即化</h3>
+<p><a
+target="_blank" rel="noopener" href="https://mujocolab.github.io/mjlab/main/source/randomization.html">Domain
+Randomization</a></p>
+<h3 id="curriculum">Curriculum</h3>
+<ul>
+<li>curriculum管理器会根据策略表现调整训练条件。训练从较简单的问题开始，随着策略展现出应对当前条件的能力，难度会逐渐增加</li>
+<li>每次环境重置都会调用curriculum
+term,每个term接收环境和重置环境ID集，检查一些性能指标，并将其应用于更改环境参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.managers.curriculum_manager <span class="keyword">import</span> CurriculumTermCfg</span><br><span class="line"></span><br><span class="line">curriculum = &#123;</span><br><span class="line">    <span class="string">&quot;terrain_levels&quot;</span>: CurriculumTermCfg(</span><br><span class="line">        func=mdp.terrain_levels_vel,</span><br><span class="line">        params=&#123;<span class="string">&quot;command_name&quot;</span>: <span class="string">&quot;twist&quot;</span>&#125;,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="built-in-curriculum-functions">built-in curriculum
+functions</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>terrain_levels_vel</code></td>
+<td>衡量每个机器人在episode中行进距离，行进距离足够的机器人会在地形网格中提升一个难度等级</td>
+</tr>
+<tr class="even">
+<td><code>commands_vel</code></td>
+<td>根据训练步数扩展速度命令的范围每个阶段都会指定一个步数阈值，以及超过该阈值时要应用的新范围</td>
+</tr>
+<tr class="odd">
+<td><code>reward_curriculum</code></td>
+<td>根据训练步数阈值调整奖励的权重和/或参数，取代了较旧的 reward_weight
+函数，并且还支持修改奖励函数参数</td>
+</tr>
+<tr class="even">
+<td><code>termination_curriculum</code></td>
+<td>根据训练步数阈值调整终止项的参数，可用于随着训练的进行逐步收紧终止条件</td>
+</tr>
+</tbody>
+</table>
+<h4 id="reward-curriculum">Reward Curriculum</h4>
+<ul>
+<li>随着训练的进行，<code>reward_curriculum</code>会对奖励项的权重或关键字参数进行更改。每个阶段指定一个步数阈值和一个可选的权重或参数更新。按顺序评估各个阶段，并应用已达到阈值的每个阶段</li>
+<li>常见做法是在训练初期引入较低的惩罚项，并在策略掌握基本技能后增加惩罚项</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.managers.curriculum_manager <span class="keyword">import</span> CurriculumTermCfg</span><br><span class="line"></span><br><span class="line">curriculum = &#123;</span><br><span class="line">    <span class="string">&quot;joint_vel_hinge_weight&quot;</span>: CurriculumTermCfg(</span><br><span class="line">        func = mdp.reward_curriculum,</span><br><span class="line">        params=&#123;</span><br><span class="line">            <span class="string">&quot;reward_name&quot;</span>: <span class="string">&quot;joint_vel_hinge&quot;</span>,</span><br><span class="line">            <span class="string">&quot;stage&quot;</span>: [</span><br><span class="line">                &#123;<span class="string">&quot;step&quot;</span>：<span class="number">0</span>, <span class="string">&quot;weight&quot;</span>: -<span class="number">0.01</span>&#125;,</span><br><span class="line">                &#123;<span class="string">&quot;step&quot;</span>：<span class="number">12000</span>, <span class="string">&quot;weight&quot;</span>: -<span class="number">0.1</span>&#125;,</span><br><span class="line">                &#123;<span class="string">&quot;step&quot;</span>：<span class="number">24000</span>, <span class="string">&quot;weight&quot;</span>: -<span class="number">1.0</span>&#125;,</span><br><span class="line">            ],</span><br><span class="line">        &#125;,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>还可以更改传递给奖励函数的参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">curriculum = &#123;</span><br><span class="line">    <span class="string">&quot;track_lin_vel_tighten&quot;</span>: CurriculumTermCfg&#123;</span><br><span class="line">        func = mdp.reward_curriculum,</span><br><span class="line">        params=&#123;</span><br><span class="line">            <span class="string">&quot;reward_name&quot;</span>: <span class="string">&quot;track_linear_velocity&quot;</span>,</span><br><span class="line">            <span class="string">&quot;stages&quot;</span>:[</span><br><span class="line">                &#123;<span class="string">&quot;step&quot;</span>: <span class="number">0</span>, <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;std&quot;</span>: <span class="number">0.5</span>&#125;&#125;,</span><br><span class="line">                &#123;<span class="string">&quot;step&quot;</span>: <span class="number">20000</span>, <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;std&quot;</span>: <span class="number">0.3</span>&#125;&#125;,</span><br><span class="line">                &#123;<span class="string">&quot;step&quot;</span>: <span class="number">50000</span>, <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;std&quot;</span>: <span class="number">0.1</span>&#125;&#125;,</span><br><span class="line">            ],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单个阶段可以同时更新权重和参数</li>
+</ul>
+<h4 id="termination-curriculum">Termination curriculum</h4>
+<ul>
+<li><code>termination_curriculum</code>会在训练过程中逐步调整终止条件的参数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.managers.curriculum_manager <span class="keyword">import</span> CurriculumTerCfg</span><br><span class="line"></span><br><span class="line">curriculum = &#123;</span><br><span class="line">    <span class="string">&quot;energy_threshold&quot;</span>: CurriculumTermCfg,</span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">&quot;termination_name&quot;</span>: <span class="string">&quot;energy&quot;</span>,</span><br><span class="line">        <span class="string">&quot;stages&quot;</span>: [</span><br><span class="line">            &#123;<span class="string">&quot;steps&quot;</span>: <span class="number">12000</span>, <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;threshold&quot;</span>: <span class="number">10000.0</span>&#125;&#125;,</span><br><span class="line">            &#123;<span class="string">&quot;steps&quot;</span>: <span class="number">24000</span>, <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;threshold&quot;</span>: <span class="number">700.0</span>&#125;&#125;,</span><br><span class="line">            &#123;<span class="string">&quot;steps&quot;</span>: <span class="number">36000</span>, <span class="string">&quot;params&quot;</span>: &#123;<span class="string">&quot;threshold&quot;</span>: <span class="number">400.0</span>&#125;&#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="metrics">Metrics</h3>
+<ul>
+<li>指标管理器会将每步的标量值记录为回合平均值，指标本身不具有权重，也不会根据步长进行缩放</li>
+<li>每个指标项都会以其名称注册到<code>ManagerBasedRlEnvCfg</code>的指标字典中。配置非常简单：一个可调用对象和一个可选的参数字典。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.managers.metrics_manager <span class="keyword">import</span> MetricsTermCfg</span><br><span class="line"></span><br><span class="line">metrics = &#123;</span><br><span class="line">    <span class="string">&quot;base_height&quot;</span>: MetricsTermCfg(</span><br><span class="line">        func = base_height,</span><br><span class="line">        params = &#123;<span class="string">&quot;asset_cfg&quot;</span>: SceneEntityCfg(<span class="string">&quot;robot&quot;</span>)&#125;,</span><br><span class="line">    ),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="recorders">Recorders</h3>
+<ul>
+<li>recorder manager
+提供生命周期hook,用于在rollcout过程中记录数据，不会影响优化循环</li>
+<li>每个recorder
+term都是一个需要自己实现的类，mjlab会在合适的时机调用</li>
+<li>Lifecycle hooks
+<ul>
+<li><code>record_pre_reset(env_ids)</code>: 在终止的环境被重置之前，在
+env.step() 内被调用。
+<ul>
+<li>’obs_buf`:保存上一步结束时的观测值</li>
+<li><code>action_manager.action</code>:保存最终动作,随后<code>_reset_idx</code>会立即将该变量在这些环境中清除</li>
+<li><code>reward_buf</code>:记录最终奖励</li>
+</ul></li>
+<li><code>reward_post_reset(env_ids)</code>：在重置完成且有新的观测数据可用时调用。</li>
+<li><code>record_post_step</code>： 在每次 env.step()
+结束时调用，并传入新的观测值。</li>
+<li><code>close</code>：环境关闭时调用</li>
+</ul></li>
+</ul>
+<h4 id="writing-a-recorder-tern">Writing a recorder tern</h4>
+<ul>
+<li>继承 RecorderTerm
+类，并重写所需的hook，环境变量可通过<code>self._env</code>获取，从而可以访问<code>self._env.obs_buf</code>、<code>self._env.action_manager.action</code>以及所有其他管理器。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">from</span> mjlab.managers <span class="keyword">import</span> RecorderTerm, RecorderTermCfg</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CsvRecorder</span>(<span class="title class_ inherited__">RecorderTerm</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg, env</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(cfg, env)</span><br><span class="line">        <span class="variable language_">self</span>._file = <span class="built_in">open</span>(cfg.params[<span class="string">&quot;path&quot;</span>], <span class="string">&quot;w&quot;</span>, newline=<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="variable language_">self</span>._writer = csv.writer(<span class="variable language_">self</span>._file)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">record_pre_reset</span>(<span class="params">self, env_ids</span>):</span><br><span class="line">        <span class="comment"># Terminal transition: action is still intact here.</span></span><br><span class="line">        <span class="comment"># It will be zeroed by _reset_idx immediately after this returns.</span></span><br><span class="line">        obs = <span class="variable language_">self</span>._env.obs_buf[<span class="string">&quot;actor&quot;</span>][env_ids].cpu().numpy()</span><br><span class="line">        act = <span class="variable language_">self</span>._env.action_manager.action[env_ids].cpu().numpy()</span><br><span class="line">        <span class="keyword">for</span> o, a <span class="keyword">in</span> <span class="built_in">zip</span>(obs, act):</span><br><span class="line">            <span class="variable language_">self</span>._writer.writerow(o.tolist() + a.tolist())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">record_post_step</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># Skip envs that just reset: their terminal pair was written</span></span><br><span class="line">        <span class="comment"># in record_pre_reset and their action is now zeroed.</span></span><br><span class="line">        mask = ~<span class="variable language_">self</span>._env.reset_buf</span><br><span class="line">        obs = <span class="variable language_">self</span>._env.obs_buf[<span class="string">&quot;actor&quot;</span>][mask].cpu().numpy()</span><br><span class="line">        act = <span class="variable language_">self</span>._env.action_manager.action[mask].cpu().numpy()</span><br><span class="line">        <span class="keyword">for</span> o, a <span class="keyword">in</span> <span class="built_in">zip</span>(obs, act):</span><br><span class="line">            <span class="variable language_">self</span>._writer.writerow(o.tolist() + a.tolist())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">close</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>._file.close()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>registration</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass, field</span><br><span class="line"><span class="keyword">from</span> mjlab.managers <span class="keyword">import</span> RecorderTermCfg</span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyEnvCfg</span>(<span class="title class_ inherited__">SomeTaskEnvCfg</span>):</span><br><span class="line">    recorders: <span class="built_in">dict</span> = field(default_factory=<span class="keyword">lambda</span>: &#123;</span><br><span class="line">        <span class="string">&quot;csv&quot;</span>: RecorderTermCfg(</span><br><span class="line">            func=CsvRecorder,</span><br><span class="line">            params=&#123;<span class="string">&quot;path&quot;</span>: <span class="string">&quot;rollout.csv&quot;</span>&#125;,</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="training--debugging">Training &amp; Debugging</h3>
+<ul>
+<li>mjlab使用RSL-RL进行on-policy强化学习，分为三个部分
+<ul>
+<li>任务注册：将环境和训练配置捆绑在同一个名称下</li>
+<li>VecEnv wrapper：将mjlab环境适配到RSL-RL期望的接口</li>
+<li>configuration dataclasses：控制训练运行</li>
+</ul></li>
+</ul>
+<h4 id="task-registry">Task registry</h4>
+<ul>
+<li>mjlab中的每一个任务都是一个二元组：一个环境配置（ManagerBasedRlEnvCfg）和一个训练配置（RslRlOnPolicyRunnerCfg），task
+registery将字符串名称映射到这个二元组，以便可以通过CLI按名称启动训练</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.tasks.registry <span class="keyword">import</span> register_mjlab_task</span><br><span class="line"><span class="keyword">from</span> mjlab.tasks.velocity.rl <span class="keyword">import</span> VelocityOnPolicyRunner</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .env_cfgs <span class="keyword">import</span> unitree_g1_rough_env_cfg, unitree_g1_flat_env_cfg</span><br><span class="line"><span class="keyword">from</span> .rl_cfg <span class="keyword">import</span> unitree_g1_ppo_runner_cfg</span><br><span class="line"></span><br><span class="line">register_mjlab_task(</span><br><span class="line">  task_id=<span class="string">&quot;Mjlab-Velocity-Rough-Unitree-G1&quot;</span>,</span><br><span class="line">  env_cfg=unitree_g1_rough_env_cfg(),</span><br><span class="line">  play_env_cfg=unitree_g1_rough_env_cfg(play=<span class="literal">True</span>),</span><br><span class="line">  rl_cfg=unitree_g1_ppo_runner_cfg(),</span><br><span class="line">  runner_cls=VelocityOnPolicyRunner,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注册需要
+<ul>
+<li><code>task_id</code>：<code>Mjlab-{Category}-{Terrain}-{Robot}</code></li>
+<li><code>env_cfg</code>：用于训练的<code>ManagerBasedRlEnvCfg</code></li>
+<li><code>play_env_cfg</code>：一个禁用随机化并将回合长度设置为无限的变体，用于评估</li>
+<li><code>rl_cfg</code>：包含 PPO
+超参数和网络架构的<code>RslRlOnPolicyRunnerCfg</code></li>
+<li><code>runner_cls</code>：可选的自定义运行器类（默认为<code>MjlabOnPolicyRunner</code>）</li>
+</ul></li>
+</ul>
+<h4 id="configuration">Configuration</h4>
+<ul>
+<li>包含runner设置、网络架构（RslRlModelCfg）和PPO超参数（RslRlPpoAlgorithmCfg）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mjlab.rl <span class="keyword">import</span> (</span><br><span class="line">    RslRlModelCfg,</span><br><span class="line">    RslRlOnPolicyRunnerCfg,</span><br><span class="line">    RslRlPpoAlgorithmCfg,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">unitree_g1_ppo_runner_cfg</span>() -&gt; RslRlOnPolicyRunnerCfg:</span><br><span class="line">    <span class="keyword">return</span> RslRlOnPolicyRunnerCfg(</span><br><span class="line">        actor=RslRlModelCfg(</span><br><span class="line">            hidden_dims=(<span class="number">512</span>, <span class="number">256</span>, <span class="number">128</span>),</span><br><span class="line">            activation=<span class="string">&quot;elu&quot;</span>,</span><br><span class="line">            obs_normalization=<span class="literal">True</span>,</span><br><span class="line">        ),</span><br><span class="line">        critic=RslRlModelCfg(</span><br><span class="line">            hidden_dims=(<span class="number">512</span>, <span class="number">256</span>, <span class="number">128</span>),</span><br><span class="line">            activation=<span class="string">&quot;elu&quot;</span>,</span><br><span class="line">            obs_normalization=<span class="literal">True</span>,</span><br><span class="line">        ),</span><br><span class="line">        algorithm=RslRlPpoAlgorithmCfg(</span><br><span class="line">            value_loss_coef=<span class="number">1.0</span>,</span><br><span class="line">            use_clipped_value_loss=<span class="literal">True</span>,</span><br><span class="line">            clip_param=<span class="number">0.2</span>,</span><br><span class="line">            entropy_coef=<span class="number">0.01</span>,</span><br><span class="line">            num_learning_epochs=<span class="number">5</span>,</span><br><span class="line">            num_mini_batches=<span class="number">4</span>,</span><br><span class="line">            learning_rate=<span class="number">1.0e-3</span>,</span><br><span class="line">            schedule=<span class="string">&quot;adaptive&quot;</span>,</span><br><span class="line">            gamma=<span class="number">0.99</span>,</span><br><span class="line">            lam=<span class="number">0.95</span>,</span><br><span class="line">            desired_kl=<span class="number">0.01</span>,</span><br><span class="line">            max_grad_norm=<span class="number">1.0</span>,</span><br><span class="line">        ),</span><br><span class="line">        experiment_name=<span class="string">&quot;g1_velocity&quot;</span>,</span><br><span class="line">        save_interval=<span class="number">50</span>,</span><br><span class="line">        num_steps_per_env=<span class="number">24</span>,</span><br><span class="line">        max_iterations=<span class="number">30_000</span>,</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查点">检查点</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uv run train Mjlab-Velocity-Flat-Unitree-G1 \</span><br><span class="line">    --num-envs 4096 \</span><br><span class="line">    --agent.resume True</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>runner会在<code>logs/rsl_rl/{experiment_name}/</code>目录下查找最近的一次运行目录，并加载编号最大的检查点。可通过<code>--agent.load-run</code>（对目录名称进行正则表达式匹配）和<code>--agent.load-checkpoint</code>（对检查点文件名进行正则表达式匹配）来缩小搜索范围</li>
+</ul>
+<h3 id="viewer">Viewer</h3>
+<ul>
+<li>基于mujoco构建的原生查看器和viser</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Desktop window (MuJoCo native viewer).</span></span><br><span class="line">uv run play Mjlab-Velocity-Flat-Unitree-G1 --viewer native \</span><br><span class="line">    --wandb-run-path your-entity/your-project/run_id</span><br><span class="line"></span><br><span class="line"><span class="comment"># Browser-based viewer (opens localhost:8080).</span></span><br><span class="line">uv run play Mjlab-Velocity-Flat-Unitree-G1 --viewer viser \</span><br><span class="line">    --wandb-run-path your-entity/your-project/run_id</span><br></pre></td></tr></table></figure>
+
+<h4 id="native-mujoco-viewer">Native Mujoco Viewer</h4>
+<ul>
+<li>快捷键</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Space</td>
+<td>暂停或恢复仿真</td>
+</tr>
+<tr class="even">
+<td>Enter</td>
+<td>重置环境</td>
+</tr>
+<tr class="odd">
+<td>+/-</td>
+<td>循环切换环境</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>切换同时渲染所有环境</td>
+</tr>
+<tr class="odd">
+<td>P</td>
+<td>切换奖励图表</td>
+</tr>
+<tr class="even">
+<td>R</td>
+<td>切换调试可视化模式</td>
+</tr>
+</tbody>
+</table>
+<h4 id="viser">Viser</h4>
+<ul>
+<li>侧边烂
+<ul>
+<li>Controls：播放/暂停、重置、速度调整、环境选择和显示设置</li>
+<li>Rewards：实时现实每项的奖励图表，可通过复选框切换</li>
+<li>Metrics：当使用MetricManager时，实时现实每项的指标图表</li>
+<li>Cammera Feeds：场景中每个<code>CameraSensor</code>的实时 RGB
+和深度图像面板。深度比例滑块可调整可视化范围，视锥切换可在 3D
+场景中显示摄像机的视野</li>
+<li>Groups：显示或隐藏Mujoco gemo和site组</li>
+</ul></li>
+</ul>
+<h2 id="api">API</h2>
+<p><a
+target="_blank" rel="noopener" href="https://mujocolab.github.io/mjlab/main/source/api/index.html">https://mujocolab.github.io/mjlab/main/source/api/index.html</a></p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/avatar.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/avatar.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">Loner</div><div class="post-copyright__author_desc"></div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2026/06/25/Mjlab/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2026/06/25/Mjlab/')">Mjlab</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2026/06/25/Mjlab/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Mjlab&amp;url=http://example.com/2026/06/25/Mjlab/&amp;pic=/img/default_cover.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">一个无趣的博客</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/mjlab/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>mjlab<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/img/default_cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/23/Sim-and-Real-Co-Training/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Sim-and-Real Co-Training</div></div></a></div><div class="next-post pull-right"><a href="/2026/07/02/AtomicVLA/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AtomicVLA</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description"></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Loner</h1><div class="author-info__desc"></div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/loner98" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/263764900" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">架构概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#entity"><span class="toc-number">1.2.</span> <span class="toc-text">Entity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#actutors"><span class="toc-number">1.3.</span> <span class="toc-text">Actutors</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#actuators-types"><span class="toc-number">1.3.1.</span> <span class="toc-text">Actuators types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#xml%E6%89%A7%E8%A1%8C%E5%99%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text">XML执行器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%99%A8%E5%BB%B6%E8%BF%9F"><span class="toc-number">1.3.3.</span> <span class="toc-text">执行器延迟</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E6%89%A7%E8%A1%8C%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.4.</span> <span class="toc-text">编写执行器配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sensors"><span class="toc-number">1.4.</span> <span class="toc-text">Sensors</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#builtinsensor"><span class="toc-number">1.4.1.</span> <span class="toc-text">BuiltinSensor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#contactsnesot"><span class="toc-number">1.4.2.</span> <span class="toc-text">ContactSnesot</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#primary%E5%92%8Csecondary"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">Primary和Secondary</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rgb-d-sensor"><span class="toc-number">1.4.3.</span> <span class="toc-text">RGB-D Sensor</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scene"><span class="toc-number">1.5.</span> <span class="toc-text">Scene</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#terrain%E5%9C%B0%E5%BD%A2"><span class="toc-number">1.6.</span> <span class="toc-text">Terrain(地形)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#the-manager-layer"><span class="toc-number">2.</span> <span class="toc-text">The Manager Layer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#observations"><span class="toc-number">2.1.</span> <span class="toc-text">Observations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#observation-groups"><span class="toc-number">2.1.1.</span> <span class="toc-text">Observation groups</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#progressing-pipeline"><span class="toc-number">2.1.2.</span> <span class="toc-text">Progressing pipeline</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#observation-history-and-delay"><span class="toc-number">2.1.3.</span> <span class="toc-text">observation history and
+delay</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#built-in-observation-functions"><span class="toc-number">2.1.4.</span> <span class="toc-text">Built-in observation
+functions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89observation%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.5.</span> <span class="toc-text">自定义observation函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#action"><span class="toc-number">2.2.</span> <span class="toc-text">Action</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#task-space-actions"><span class="toc-number">2.2.1.</span> <span class="toc-text">Task-space actions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#multiple-action-terms"><span class="toc-number">2.2.2.</span> <span class="toc-text">Multiple action terms</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rewards"><span class="toc-number">2.3.</span> <span class="toc-text">Rewards</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.1.</span> <span class="toc-text">内置奖励函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%89dt%E8%BF%9B%E8%A1%8C%E5%A5%96%E5%8A%B1%E7%BC%A9%E6%94%BE"><span class="toc-number">2.3.2.</span> <span class="toc-text">按dt进行奖励缩放</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#terminations%E7%BB%88%E6%AD%A2"><span class="toc-number">2.4.</span> <span class="toc-text">terminations（终止）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E7%BD%AEtermination%E5%87%BD%E6%95%B0"><span class="toc-number">2.4.1.</span> <span class="toc-text">内置termination函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#commands"><span class="toc-number">2.5.</span> <span class="toc-text">Commands</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#include-command-terms"><span class="toc-number">2.5.1.</span> <span class="toc-text">Include command terms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89command-term"><span class="toc-number">2.5.2.</span> <span class="toc-text">自定义command term</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#events"><span class="toc-number">2.6.</span> <span class="toc-text">Events</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#lifecycle-modes"><span class="toc-number">2.6.1.</span> <span class="toc-text">Lifecycle modes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#built-in-event-functions"><span class="toc-number">2.6.2.</span> <span class="toc-text">Built-in event functions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-event-term"><span class="toc-number">2.6.3.</span> <span class="toc-text">自定义 event term</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E9%9A%8F%E5%8D%B3%E5%8C%96"><span class="toc-number">2.7.</span> <span class="toc-text">域随即化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#curriculum"><span class="toc-number">2.8.</span> <span class="toc-text">Curriculum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#built-in-curriculum-functions"><span class="toc-number">2.8.1.</span> <span class="toc-text">built-in curriculum
+functions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reward-curriculum"><span class="toc-number">2.8.2.</span> <span class="toc-text">Reward Curriculum</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#termination-curriculum"><span class="toc-number">2.8.3.</span> <span class="toc-text">Termination curriculum</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#metrics"><span class="toc-number">2.9.</span> <span class="toc-text">Metrics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#recorders"><span class="toc-number">2.10.</span> <span class="toc-text">Recorders</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#writing-a-recorder-tern"><span class="toc-number">2.10.1.</span> <span class="toc-text">Writing a recorder tern</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#training--debugging"><span class="toc-number">2.11.</span> <span class="toc-text">Training &amp; Debugging</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#task-registry"><span class="toc-number">2.11.1.</span> <span class="toc-text">Task registry</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#configuration"><span class="toc-number">2.11.2.</span> <span class="toc-text">Configuration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="toc-number">2.11.3.</span> <span class="toc-text">检查点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#viewer"><span class="toc-number">2.12.</span> <span class="toc-text">Viewer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#native-mujoco-viewer"><span class="toc-number">2.12.1.</span> <span class="toc-text">Native Mujoco Viewer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#viser"><span class="toc-number">2.12.2.</span> <span class="toc-text">Viser</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#api"><span class="toc-number">3.</span> <span class="toc-text">API</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/16/modal/" title="modal"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="modal"/></a><div class="content"><a class="title" href="/2026/10/16/modal/" title="modal">modal</a><time datetime="2026-10-16T10:21:24.000Z" title="发表于 2026-10-16 10:21:24">2026-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/07/06/Tmux/" title="Tmux"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Tmux"/></a><div class="content"><a class="title" href="/2026/07/06/Tmux/" title="Tmux">Tmux</a><time datetime="2026-07-06T17:16:04.000Z" title="发表于 2026-07-06 17:16:04">2026-07-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/07/02/AtomicVLA/" title="AtomicVLA"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AtomicVLA"/></a><div class="content"><a class="title" href="/2026/07/02/AtomicVLA/" title="AtomicVLA">AtomicVLA</a><time datetime="2026-07-02T11:23:51.000Z" title="发表于 2026-07-02 11:23:51">2026-07-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/25/Mjlab/" title="Mjlab"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mjlab"/></a><div class="content"><a class="title" href="/2026/06/25/Mjlab/" title="Mjlab">Mjlab</a><time datetime="2026-06-25T12:00:27.000Z" title="发表于 2026-06-25 12:00:27">2026-06-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/23/Sim-and-Real-Co-Training/" title="Sim-and-Real Co-Training"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sim-and-Real Co-Training"/></a><div class="content"><a class="title" href="/2026/04/23/Sim-and-Real-Co-Training/" title="Sim-and-Real Co-Training">Sim-and-Real Co-Training</a><time datetime="2026-04-23T10:36:38.000Z" title="发表于 2026-04-23 10:36:38">2026-04-23</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By Loner</div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">2</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="/null" title="博客"><img class="back-menu-item-icon" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" href="/null" title="安知鱼图床"><img class="back-menu-item-icon" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 0.88rem;">C++<sup>1</sup></a><a href="/tags/Co-Training/" style="font-size: 0.88rem;">Co-Training<sup>1</sup></a><a href="/tags/Diffusion-Policy/" style="font-size: 0.88rem;">Diffusion Policy<sup>1</sup></a><a href="/tags/Mujoco/" style="font-size: 0.88rem;">Mujoco<sup>1</sup></a><a href="/tags/RL/" style="font-size: 0.88rem;">RL<sup>1</sup></a><a href="/tags/docker/" style="font-size: 0.88rem;">docker<sup>1</sup></a><a href="/tags/mjlab/" style="font-size: 0.88rem;">mjlab<sup>1</sup></a><a href="/tags/ros/" style="font-size: 0.88rem;">ros<sup>5</sup></a><a href="/tags/%E4%BB%BB%E5%8A%A1%E8%A7%84%E5%88%92/" style="font-size: 0.88rem;">任务规划<sup>1</sup></a><a href="/tags/%E5%85%B7%E8%BA%AB%E6%99%BA%E8%83%BD/" style="font-size: 0.88rem;">具身智能<sup>1</sup></a><a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 0.88rem;">服务器<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
